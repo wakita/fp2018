@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git add slide/$1-*.md docs/slide/$1-*.html

@@ -1,0 +1,28 @@
+@media screen {
+  body {
+    margin-left: 5em;
+    margin-right: 5em;
+    line-height: 1.7;
+  }
+}
+
+li.long {
+  padding-bottom: 10ex;
+}
+
+@media print {
+  h1 {
+    display: block;
+    page-break-before: always;
+  }
+  h1:first-of-type {
+    page-break-before: avoid;
+  }
+  a, code, em, pre, .math {
+    color: #000;
+  }
+  em {
+    font-style: normal;
+    font-weight: bold;
+  }
+}
