@@ -3,7 +3,7 @@
   <meta name="generator" content="pandoc">
   <meta name="author" content="Ken Wakita (https://wakita.github.io/fp2018/)">
   <meta name="dcterms.date" content="2018-09-27">
-  <title>Functional Programming: Day 1</title>
+  <title>Functional Programming: Day 1 (Overview)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -135,24 +135,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
     <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
 
-<section style="top: 138.5px; display: block;" class="present">
-  <h1 class="title">Functional Programming: Day 1</h1>
+<section style="top: 48px; display: block;" class="present">
+  <h1 class="title">Functional Programming: Day 1 (Overview)</h1>
   <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/" class="uri">https://wakita.github.io/fp2018/</a>)</p>
   <p class="date">Sep.&nbsp;27, 2018</p>
 </section>
 
-<section id="todays-course-material" class="slide level2 future" style="top: 297.5px; display: block;" hidden="" aria-hidden="true">
+<section id="todays-course-material" class="slide level2 future" style="top: 314px; display: block;" hidden="" aria-hidden="true">
 <h2>Today’s course material</h2>
-<figure>
-<img title="QR code" alt="http://bit.ly/fp2018-day1" src="/fp2018/images/01-overview.png" data-lazy-loaded=""><figcaption>http://bit.ly/fp2018-day1</figcaption>
-</figure>
+<p><a href="http://bit.ly/fp2018-day1" class="uri">http://bit.ly/fp2018-day1</a></p>
 <ul>
 <li><p>Bookmark:</p>
 <p><a href="https://wakita.github.io/fp2018/" class="uri">https://wakita.github.io/fp2018/</a></p></li>
 </ul>
 </section>
-<section id="guidance-925" class="slide level2 future" style="top: 206px; display: block;" hidden="" aria-hidden="true">
-<h2>Guidance (9/25)</h2>
+<section id="guidance-927" class="slide level2 future" style="top: 206px; display: block;" hidden="" aria-hidden="true">
+<h2>Guidance (9/27)</h2>
 <ul>
 <li><p><a href="http://www.ocw.titech.ac.jp/index.php?module=General&amp;action=T0300&amp;JWC=201804054&amp;lang=EN">Course Description</a></p></li>
 <li><p>Introduction to OCaml</p></li>
@@ -183,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p>Start OCaml interpreter: open terminal on Linux /Mac or start <code>cmd.exe</code> on Windows</p></li>
 <li><p>Run <code>ocaml</code>. If your installation is fine OCaml welcomes you with its version number and a prompt <code>#</code>:</p>
-<pre><code>        OCaml version 4.05.0
+<pre><code>        OCaml version 4.07.0
 
 # </code></pre></li>
 <li><p>Try out some examples from <a href="http://ocaml.org/learn/tutorials/basics.html">OCaml: The Basics</a></p>
@@ -198,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>That’s it</h2>
 <ul>
 <li><p>Please bring your laptop for the next class</p></li>
-<li><p>Recommended reading:</p>
+<li><p>Reading Assignment:</p>
 <ul>
 <li><a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html">Chapter 1: The core language</a> from OCaml manual</li>
 </ul></li>
@@ -207,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="back-to-top" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section></section>
     </div>
   <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
-  Functional Programming: Day 1
+  Functional Programming: Day 1 (Overview)
   Ken Wakita (https://wakita.github.io/fp2018/)
   Sep.&nbsp;27, 2018
 </div></div>

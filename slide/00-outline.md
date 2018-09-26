@@ -1,5 +1,5 @@
 ---
-title: "Functional Programming"
+title: "FP: Outline"
 date: "Fall, 2018"
 ---
 
@@ -13,7 +13,7 @@ date: "Fall, 2018"
 
 ## Introduction to OCaml
 
-[Day 2](02-ocaml1.html)
+Day 2
 :   - Primitive data types
 
     - Compound types (tuples, lists, variants)

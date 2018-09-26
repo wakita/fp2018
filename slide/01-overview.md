@@ -1,17 +1,17 @@
 ---
-title: "Functional Programming: Day 1"
+title: "Functional Programming: Day 1 (Overview)"
 date: "Sep. 27, 2018"
 ---
 
 ## Today's course material
 
-![http://bit.ly/fp2018-day1](/fp2018/images/01-overview.png "QR code")
+[http://bit.ly/fp2018-day1](http://bit.ly/fp2018-day1)
 
 - Bookmark:
 
     [https://wakita.github.io/fp2018/](https://wakita.github.io/fp2018/)
 
-## Guidance (9/25)
+## Guidance (9/27)
 
 - [Course Description](http://www.ocw.titech.ac.jp/index.php?module=General&action=T0300&JWC=201804054&lang=EN)
 
@@ -49,7 +49,7 @@ Note
 - Run `ocaml`.  If your installation is fine OCaml welcomes you with its version number and a prompt `# `:
 
     ```
-            OCaml version 4.05.0
+            OCaml version 4.07.0
 
     # 
     ```
@@ -69,6 +69,6 @@ Note
 
 - Please bring your laptop for the next class
 
-- Recommended reading:
+- Reading Assignment:
 
     - [Chapter 1: The core language](https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html) from OCaml manual
