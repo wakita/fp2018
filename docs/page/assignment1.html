@@ -47,10 +47,11 @@
 <h1 id="your-mission">Your Mission</h1>
 <p>Download <a href="/fp2018/assignments/answer1.ml">answer1.ml</a>. This is a template file for your answers. You may find half-solved answers to the five problems described below. OCaml interpreter happily accept this file: (Feed this file to OCaml interpreter with <code>ocaml answer1.ml</code> from the command line and OCaml accepts it without any complaint.) However, <code>answer1.ml</code> contains inappropriate definitions at several places. For example <code>area_of_circle</code> and <code>radius_of_circle</code> always answers zeros which are clearly wrong answers in almost all cases.</p>
 <p>Your mission is to correctly modify <code>answer1.ml</code>.</p>
-<h2 id="problem-1.-circle_area">Problem 1. <code>circle_area</code></h2>
-<p>Define a function named <code>circle_area</code> that takes a circle’s radius and gives its area.</p>
-<h2 id="problem-2.-radius_of_circle">Problem 2. <code>radius_of_circle</code></h2>
-<p>Define a function named <code>radius_of_circle</code> that takes an area of a circle and gives its radius.</p>
+<hr />
+<h2 id="problem-1.-volume_of_cube">Problem 1. <code>volume_of_cube</code></h2>
+<p>Define a function named <code>volume_of_cube</code> that takes a cube’s edge length and gives its volume.</p>
+<h2 id="problem-2.-edgelen_of_cube">Problem 2. <code>edgelen_of_cube</code></h2>
+<p>Define a function named <code>edgelen_of_cube</code> that takes a volume of a cube and gives its edge length.</p>
 <dl>
 <dt>Hint</dt>
 <dd><ul>
@@ -58,36 +59,26 @@
 </ul>
 </dd>
 </dl>
-<h2 id="problem-3.-circle_areas">Problem 3. <code>circle_areas</code></h2>
-<p>Define a function named <code>circle_areas</code> that takes a list of circles’ radii and gives their areas.</p>
+<h2 id="problem-3.-volumes_of_cubes">Problem 3. <code>volumes_of_cubes</code></h2>
+<p>Define a function named <code>volumes_of_cubes</code> that takes a list of cubes’ edge lengths and gives their volumes.</p>
 <dl>
 <dt>Hints</dt>
 <dd><ul>
-<li><p>You may reuse the definition of <code>circle_area</code>.</p></li>
-<li><p><code>circle_areas [1.0; 3.0; 5.0]</code> should give <code>[3.14159265358979312; 28.274333882308138; 78.5398163397448315]</code>.</p></li>
+<li><p>You may reuse the definition of <code>volume_of_cube</code>.</p></li>
+<li><p><code>volumes_of_cubes [1.0; 3.0; 5.0]</code> should give <code>[1.; 27.; 125.]</code>.</p></li>
 <li><p>You may want to use functions from the <a href="https://caml.inria.fr/pub/docs/manual-ocaml/libref/List.html"><code>List</code> module</a>. You can equally easily solve this problem without using the List module.</p></li>
 </ul>
 </dd>
 </dl>
-<h2 id="problem-4.-mul_num">Problem 4. <code>mul_num</code></h2>
-<p>Define <code>div_num</code> that emulates faction over numbers: <span class="math inline">\(n_1 / n_2\)</span>.</p>
-<dl>
-<dt>Hints</dt>
-<dd><ul>
-<li>Look at the definition of <code>add_num</code> defined in <a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html#sec11">Section 1.4</a></li>
-</ul>
-</dd>
-</dl>
-<h2 id="problem-5.-rotate">Problem 5. <code>rotate</code></h2>
-<p>Define a function named <code>rotate</code> that takes a point coordinate (<span class="math inline">\(p\)</span><code>: mutable_point</code>) and an angle in radian (<span class="math inline">\(\theta\)</span><code>: float</code>) and performs rotation on <span class="math inline">\(p\)</span> by <span class="math inline">\(\theta\)</span> around the origin.</p>
-<dl>
-<dt>Hints</dt>
-<dd><ul>
-<li><a href="https://en.wikipedia.org/wiki/Rotation_matrix">Rotation matrix</a></li>
-<li><a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html#sec12">Section 1.5: Imperative features</a></li>
-</ul>
-</dd>
-</dl>
+<h2 id="problem-4.-ack">Problem 4. <code>ack</code></h2>
+<p>Define <code>ack</code> that computes Ackermann function as defined in <a href="https://en.wikipedia.org/wiki/Ackermann_function">Wikipedia</a></p>
+<h2 id="problem-5.-wc">Problem 5. <code>wc</code></h2>
+<p>Define <code>wc</code> that takes a list of words and and a word and counts the number of occurrence of the word in the words. For example,</p>
+<pre><code>let words = [&quot;The&quot;; &quot;word&quot;; &quot;count&quot;; &quot;is&quot;; &quot;the&quot;; &quot;number&quot;; &quot;of&quot;; &quot;words&quot;; &quot;in&quot;; &quot;a&quot;; &quot;document&quot;; &quot;or&quot;; &quot;passage&quot;; &quot;of&quot;; &quot;text&quot;];;
+
+wc words &quot;of&quot; =&gt; 2
+wc words &quot;the&quot; =&gt; 1
+wc (List.map String.lowercase words) &quot;the&quot; =&gt; 2</code></pre>
 <hr />
 <p><strong>Back to <a href="/fp2018/page/">Top</a></strong></p>
 <section class="footnotes">

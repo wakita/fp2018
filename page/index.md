@@ -15,6 +15,8 @@ title: "Functional Programming"
 
 - [Coding Assignment](/fp2018/page/assignment1.html) --- A few pages added on Oct. 1.
 
+    Assignment updated at 22:40, October 1, 2018.
+
 <!--
 
 ## Day 3 (Oct. 4): [Introduction to functional programming in OCaml (2)](/fp2018/slide/03-ocaml2.html)
