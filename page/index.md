@@ -13,10 +13,9 @@ title: "Functional Programming"
 
 ## Day 2 (Oct. 1): [Introduction to functional programming in OCaml (1)](/fp2018/slide/02-ocaml1.html)
 
+- [Coding Assignment](/fp2018/page/assignment1.html) --- A few pages added on Oct. 1.
+
 <!--
-
-
-- [Coding Assignment](/fp2018/page/assignment1.html) --- A few pages added on Sep. 30.  They reflect some of the questions raised during the class.
 
 ## Day 3 (Oct. 4): [Introduction to functional programming in OCaml (2)](/fp2018/slide/03-ocaml2.html)
 
