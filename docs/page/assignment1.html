@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ken Wakita" />
+  <title>FP: Assignment 1 (Oct. 1)</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw-page.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FP: Assignment 1 (Oct. 1)</h1>
+<p class="author">Ken Wakita</p>
+</header>
+<h1 id="assignment">Assignment</h1>
+<dl>
+<dt>Published date</dt>
+<dd>Oct. 1, 2018
+</dd>
+<dt>Due date</dt>
+<dd>Oct. 10, 2018
+</dd>
+<dt>Method of Submission</dt>
+<dd><p><a href="https://secure.ocw.titech.ac.jp/ocwi/">OCW-i</a></p>
+<p>Upload <code>answer1.ml</code> at the respective page of OCW-i.</p>
+<p>You need to register for this class to open the OCW-i assignment page.</p>
+</dd>
+<dt>Delayed Submission</dt>
+<dd>Each submission is weighed according to half-value period of 10 days. That means if you submit a perfect answer 30 days after the due date, you will receive <span class="math inline">\(1/8\)</span> the full points. In other words, you lose <span class="math inline">\(1 - 1/2^{1/10} \approx 6.7\text {%}\)</span> points each day after the due date has passed. It is very wise to keep the due date.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+</dd>
+</dl>
+<h1 id="read-the-manual-first">READ the MANUAL FIRST</h1>
+<p>Read <a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html">the OCaml Manual Chapter1</a> first. When you are finished, try to answer the following questions.</p>
+<h1 id="your-mission">Your Mission</h1>
+<p>Download <a href="/fp2018/assignments/answer1.ml">answer1.ml</a>. This is a template file for your answers. You may find half-solved answers to the five problems described below. OCaml interpreter happily accept this file: (Feed this file to OCaml interpreter with <code>ocaml answer1.ml</code> from the command line and OCaml accepts it without any complaint.) However, <code>answer1.ml</code> contains inappropriate definitions at several places. For example <code>area_of_circle</code> and <code>radius_of_circle</code> always answers zeros which are clearly wrong answers in almost all cases.</p>
+<p>Your mission is to correctly modify <code>answer1.ml</code>.</p>
+<h2 id="problem-1.-circle_area">Problem 1. <code>circle_area</code></h2>
+<p>Define a function named <code>circle_area</code> that takes a circle’s radius and gives its area.</p>
+<h2 id="problem-2.-radius_of_circle">Problem 2. <code>radius_of_circle</code></h2>
+<p>Define a function named <code>radius_of_circle</code> that takes an area of a circle and gives its radius.</p>
+<dl>
+<dt>Hint</dt>
+<dd><ul>
+<li>Basic math functions are documented in <a href="https://caml.inria.fr/pub/docs/manual-ocaml/libref/Pervasives.html">Pervasives module</a>.</li>
+</ul>
+</dd>
+</dl>
+<h2 id="problem-3.-circle_areas">Problem 3. <code>circle_areas</code></h2>
+<p>Define a function named <code>circle_areas</code> that takes a list of circles’ radii and gives their areas.</p>
+<dl>
+<dt>Hints</dt>
+<dd><ul>
+<li><p>You may reuse the definition of <code>circle_area</code>.</p></li>
+<li><p><code>circle_areas [1.0; 3.0; 5.0]</code> should give <code>[3.14159265358979312; 28.274333882308138; 78.5398163397448315]</code>.</p></li>
+<li><p>You may want to use functions from the <a href="https://caml.inria.fr/pub/docs/manual-ocaml/libref/List.html"><code>List</code> module</a>. You can equally easily solve this problem without using the List module.</p></li>
+</ul>
+</dd>
+</dl>
+<h2 id="problem-4.-mul_num">Problem 4. <code>mul_num</code></h2>
+<p>Define <code>div_num</code> that emulates faction over numbers: <span class="math inline">\(n_1 / n_2\)</span>.</p>
+<dl>
+<dt>Hints</dt>
+<dd><ul>
+<li>Look at the definition of <code>add_num</code> defined in <a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html#sec11">Section 1.4</a></li>
+</ul>
+</dd>
+</dl>
+<h2 id="problem-5.-rotate">Problem 5. <code>rotate</code></h2>
+<p>Define a function named <code>rotate</code> that takes a point coordinate (<span class="math inline">\(p\)</span><code>: mutable_point</code>) and an angle in radian (<span class="math inline">\(\theta\)</span><code>: float</code>) and performs rotation on <span class="math inline">\(p\)</span> by <span class="math inline">\(\theta\)</span> around the origin.</p>
+<dl>
+<dt>Hints</dt>
+<dd><ul>
+<li><a href="https://en.wikipedia.org/wiki/Rotation_matrix">Rotation matrix</a></li>
+<li><a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html#sec12">Section 1.5: Imperative features</a></li>
+</ul>
+</dd>
+</dl>
+<hr />
+<p><strong>Back to <a href="/fp2018/page/">Top</a></strong></p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>この半減期はトイチ金融よりも遥かに非情なので気をつけて下さい．/ This half-value period is much worse than the interest rate of the meanest loan office; time is money.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+</body>
+</html>

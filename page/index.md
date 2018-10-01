@@ -11,9 +11,10 @@ title: "Functional Programming"
 
 - [Assignments](/fp2018/slide/01-overview.html#assignments) (Reading assignment / Install OCaml on your laptop)
 
+## Day 2 (Oct. 1): [Introduction to functional programming in OCaml (1)](/fp2018/slide/02-ocaml1.html)
+
 <!--
 
-## Day 2 (Oct. 1): [Introduction to functional programming in OCaml (1)](/fp2018/slide/02-ocaml1.html)
 
 - [Coding Assignment](/fp2018/page/assignment1.html) --- A few pages added on Sep. 30.  They reflect some of the questions raised during the class.
 
