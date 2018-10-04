@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+
+import os
+
+for section in 'index,01-overview'.split(','):
+  url = 'https://wakita.github.io/fp2017/{}.html'.format(section)
+  png = section + '.png'
+  cmd = 'qrencode --output={} {}'.format(png, url)
+  os.system(cmd)

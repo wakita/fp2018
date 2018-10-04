@@ -1,0 +1,323 @@
+<!DOCTYPE html><html class=" js no-mobile desktop no-ie safari safari538 fp2018-section tmp-section w-400 gt-240 gt-320 lt-480 lt-640 lt-768 lt-800 lt-1024 lt-1280 lt-1440 lt-1680 lt-1920 no-portrait landscape gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius cssreflections csstransforms csstransitions touch no-retina no-fontface domloaded" id="03-ocaml2-page"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Ken Wakita (https://wakita.github.io/fp2018/)">
+  <meta name="dcterms.date" content="2018-10-04">
+  <title>FP: Day 3 Introduction to OCaml 2</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      .smallcaps{font-variant: small-caps;}
+      .line-block{white-space: pre-line;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="/fp2018/lib/kw.css">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '/fp2018/lib/reveal.js/css/print/pdf.css' : '/fp2018/lib/reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script><link rel="stylesheet" type="text/css" href="/fp2018/lib/reveal.js/css/print/paper.css">
+  <!--[if lt IE 9]>
+  <script src="/fp2018/lib/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]--><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/math/math.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/notes/notes.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/contrib/a11y/accessibility-menu.js?V=2.7.0"></script></head>
+<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;"><div id="MathJax_Message" style="display: none;"></div>
+  <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
+    <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
+
+<section style="top: 138.5px; display: block;" class="present">
+  <h1 class="title">FP: Day 3<br>Introduction to OCaml 2</h1>
+  <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/" class="uri">https://wakita.github.io/fp2018/</a>)</p>
+  <p class="date">Oct.&nbsp;4, 2018</p>
+</section>
+
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="user-defined-types-continued" class="title-slide slide level1" style="top: 210.5px; display: block;"><h1>User Defined Types (continued)</h1></section><section id="records" class="slide level2 future" aria-hidden="true" style="top: 0px; display: block;">
+<h2>Records</h2>
+<p>A record can be regarded as a tuple whose elements are accessible by names. For example a <code>ratio</code> record as defined below can be regarded as a pair of <code>int</code>’s whose elements are referenced by <code>num</code> and <code>denom</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">type</span> ratio = {num: <span class="dt">int</span>; denom: <span class="dt">int</span>};;</a></code></pre></div>
+<p>A record data constructed by the following syntax:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">let</span> r = {num = <span class="dv">12</span>; denom = <span class="dv">15</span>};;</a></code></pre></div>
+<p>And names are used to access its elements:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb3-1" data-line-number="1">r.num;;</a></code></pre></div>
+<aside class="notes">Define a function named normalize that takes a rational number of type ratio and gives its normalized form. The normalized form of a rational number whose elements is minimized and the sign of the denominator is positive.
+</aside>
+<p><a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html#sec11">manual</a></p>
+</section><section id="variant-types" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Variant types</h2>
+<p>Variant types can be used to represent a member of finite flags/sets/states/tags. At first, it may look like <code>enum</code> type in C-like languages. For example, the <code>sign</code> type denotes the domain that is either positive or negative.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">type</span> sign = Positive | Negative;;</a></code></pre></div>
+<p><code>Positive</code> and <code>Negative</code> are called <em>constructors</em> of the <code>sign</code> type.</p>
+<p>As we use <code>switch</code> syntax to identify a <code>enum</code> value, we use pattern matching in OCaml:</p>
+<pre><code>let sign_int n =
+  if n &gt;= 0 then Positive
+  else Negative;;</code></pre>
+</section><section id="variant-as-tagged-union" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Variant as Tagged Union</h2>
+<p>Like Java’s <code>Enum</code> type, members of a variant type can have values. In this case, the member’s declaration contains its type: For example, the <code>color</code> type represents colors by several popular colors (black, white, red, …, cyan), and others that are expressed by combinations of red-, green-, blue-intensity.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">type</span> color = Black | White | Red | ... | Cyan | RGB <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span> * <span class="dt">int</span>;;</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">let</span> colors = [Black; White; RGB(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>); RGB(<span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>); RGB(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>)];;</a></code></pre></div>
+<p>We use pattern matching to identify the kind of <code>color</code> type and its value if any.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">let</span> color_name c =</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="kw">match</span> c <span class="kw">with</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    case Black -&gt; <span class="st">"black"</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  | ...</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  | RGB(r, g, b) -&gt; <span class="dt">Printf</span>.sprintf <span class="st">"RGB(%d,%d,%d)"</span> r g b;;</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw">val</span> color_name : color -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</a></code></pre></div>
+<p><a href="https://caml.inria.fr/pub/docs/manual-ocaml/coreexamples.html#sec11">manual</a></p>
+</section><section id="variants-and-recursive-data-types" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Variants and Recursive Data Types</h2>
+<p>A recursive data type can be easily defined by referencing the type name being defined in its definition. Let’s look at the definition of the <code>'a binary_tree</code> type:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">type</span> 'a binary_tree =</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  Empty</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">| Node <span class="kw">of</span> 'a * 'a binary_tree * 'a binary_tree;;</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">type</span> 'a binary_tree = Empty | Node <span class="kw">of</span> 'a * 'a binary_tree * 'a binary_tree</a></code></pre></div>
+<p>It offers two constructors: <code>Empty</code> represents a leaf of a tree and <code>Node</code> an internal node. The <code>Node</code> constructor contains a triple of a value of type <code>'a</code> and two subtrees both of type <code>'a binary_tree</code>.</p>
+</section><section id="an-example-of-a-binary-tree" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>An Example of a Binary Tree</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb9-1" data-line-number="1">Node(<span class="dv">4</span>, Node(<span class="dv">2</span>, Node(<span class="dv">1</span>, Empty, Empty), Node(<span class="dv">3</span>, Empty, Empty)), Empty)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">- : <span class="dt">int</span> binary_tree =</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">Node (<span class="dv">4</span>, Node (<span class="dv">2</span>, Node (<span class="dv">1</span>, Empty, Empty), Node (<span class="dv">3</span>, Empty, Empty)), Empty)</a></code></pre></div>
+<figure>
+<img alt="An illustration of a binary tree. The dots and circles depicts Empty and Node, the label of the circle its value, and arrows references to subtrees." height="500" src="/fp2018/images/03/binary-tree.png" data-lazy-loaded=""><figcaption>An illustration of a binary tree. The dots and circles depicts <code>Empty</code> and <code>Node</code>, the label of the circle its value, and arrows references to subtrees.</figcaption>
+</figure>
+</section><section id="traversing-a-recursive-data" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Traversing a Recursive Data</h2>
+<p>A function that manipulates of trees can simply be defined by use of pattern matching.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">let</span> <span class="kw">rec</span> member x tree =</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="kw">match</span> tree <span class="kw">with</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">    Empty -&gt; <span class="kw">false</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  | Node(y, left, right) -&gt;</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">      <span class="kw">if</span> x = y <span class="kw">then</span> <span class="kw">true</span> <span class="kw">else</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">      <span class="kw">if</span> x &lt; y <span class="kw">then</span> member x left <span class="kw">else</span> member x right;;</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">val</span> member : 'a -&gt; 'a binary_tree -&gt; <span class="dt">bool</span> = &lt;<span class="kw">fun</span>&gt;</a></code></pre></div>
+</section><section id="constructing-a-recursive-data" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Constructing a Recursive Data</h2>
+<p>Constructing a recursive data while traversing another. The definition below gives a new binary tree that</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">let</span> <span class="kw">rec</span> insert x tree =</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="kw">match</span> tree <span class="kw">with</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">    Empty -&gt; Node(x, Empty, Empty)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">  | Node(y, left, right) -&gt;</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">      <span class="kw">if</span> x &lt;= y <span class="kw">then</span> Node(y, insert x left, right)</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">                <span class="kw">else</span> Node(y, left, insert x right);;</a></code></pre></div>
+</section></section>
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="quiz" class="title-slide slide level1" style="top: 391.5px; display: block;"><h1>Quiz</h1></section><section id="quiz-1-values" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Quiz 1: <code>values</code></h2>
+<p>Define a function named <code>values</code> that takes a binary tree and gives a list of values contained in the tree following the order that occur from left to right in the tree.</p>
+<p><code>values Node(4, Node(2, Node(1, Empty, Empty), Node(3, Empty, Empty)), Node(5, Empty, Empty))</code> should give <code>[1; 2; 3; 4; 5]</code>.</p>
+</section><section id="an-answer-to-values" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>An Answer to <code>values</code></h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co">(* This implimentation is not efficient because of</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">  its use of the append operator (`@`).</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">  The comptational complexity is a square of the size of the tree.</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">  Can you guess its worst case scenario? *)</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">let</span> <span class="kw">rec</span> values t =</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">  <span class="kw">match</span> t <span class="kw">with</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">    | Empty -&gt; []</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">    | Node(x, left, right) -&gt; values left @ [x] @ values right;;</a></code></pre></div>
+</section><section id="a-better-answer-to-values" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>A Better Answer to <code>values</code></h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co">(* Efficient solution: linear to the size of the tree *)</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">let</span> values t =</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="kw">let</span> <span class="kw">rec</span> traverse t values =</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="kw">match</span> t <span class="kw">with</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">      | Empty -&gt; values</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">      | Node(x, left, right) -&gt;</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">          traverse right (x :: traverse left values)</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">    <span class="kw">in</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">  <span class="dt">List</span>.rev (traverse t []);;</a></code></pre></div>
+</section><section id="quiz-2-mirror" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Quiz 2: <code>mirror</code></h2>
+<p>Define a function named <code>mirror</code> that takes a binary tree and construct a <em>mirror image</em> of the given tree.</p>
+<figure>
+<img alt="mirror of the tree" src="/fp2018/images/03/mirror-tree.png" data-lazy-loaded=""><figcaption><code>mirror</code> of the tree</figcaption>
+</figure>
+</section><section id="an-answer-to-mirror" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>An Answer to <code>mirror</code></h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">let</span> <span class="kw">rec</span> mirror t =</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="kw">match</span> t <span class="kw">with</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">    | Empty -&gt; Empty</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">    | Node(x, left, right) -&gt; Node(x, mirror right, mirror left);;</a></code></pre></div>
+</section><section id="quiz-3-is_binary_search_tree" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Quiz 3: <code>is_binary_search_tree</code></h2>
+<p>It is important for the binary search tree that its elements are sorted. If it is not the case the <code>member</code> and <code>insert</code> do not work as we expect: e.g. <code>member 1 (Node(2, Empty, (Node(1, Empty, Empty))))</code> fails to find <code>1</code> contained in the tree.</p>
+<p>Define a function name <code>is_binary_search_tree</code> that takes a tree and tells if it is a binary search tree.</p>
+</section><section id="an-answer-to-is_binary_search_tree" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>An Answer to <code>is_binary_search_tree</code></h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">let</span> is_binary_search_tree t =</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">  <span class="kw">let</span> <span class="kw">rec</span> aux test t =</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">    <span class="kw">match</span> t <span class="kw">with</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">      | Empty -&gt; <span class="kw">true</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">      | Node(y, left, right) -&gt;</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">          test y &amp;&amp;</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">          aux (<span class="kw">function</span> x -&gt; x &lt; y) left &amp;&amp;</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">          aux (<span class="kw">function</span> x -&gt; x &gt; y) right <span class="kw">in</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">  aux (<span class="kw">function</span> _ -&gt; <span class="kw">true</span>) t;;</a></code></pre></div>
+</section><section id="ocaml-code-that-was-used-today" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>OCaml code that was used today</h2>
+<p>Complete answers to the exercises:</p>
+<ul>
+<li>Download <a href="/fp2018/ocaml/to-appear-after-the-class.ml"><code>03-exercise.ml</code></a></li>
+</ul>
+<!--
+- Download [`03-exercise.ml`](/fp2018/ocaml/03-exercise.ml)
+-->
+</section></section>
+<section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="assignment" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Assignment</h1></section></section>
+<section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="back-to-top" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section></section>
+    </div>
+  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
+  FP: Day 3Introduction to OCaml 2
+  Ken Wakita (https://wakita.github.io/fp2018/)
+  Oct.&nbsp;4, 2018
+</div></div>
+
+  <script src="/fp2018/lib/reveal.js/lib/js/head.min.js"></script>
+  <script src="/fp2018/lib/reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+        height: 1024,
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '/fp2018/lib/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/math/math.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    
+
+</body></html>
