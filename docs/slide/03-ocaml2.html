@@ -16,7 +16,7 @@
   <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -29,11 +29,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -130,8 +132,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
 #MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
 .MathJax_Error {color: #CC0000; font-style: italic}
-</style><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/contrib/a11y/accessibility-menu.js?V=2.7.0"></script></head>
-<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;"><div id="MathJax_Message" style="display: none;"></div>
+</style></head>
+<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;">
   <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
     <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
 
@@ -263,18 +265,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb15-4" data-line-number="4">      | Empty -&gt; <span class="kw">true</span></a>
 <a class="sourceLine" id="cb15-5" data-line-number="5">      | Node(y, left, right) -&gt;</a>
 <a class="sourceLine" id="cb15-6" data-line-number="6">          test y &amp;&amp;</a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">          aux (<span class="kw">function</span> x -&gt; x &lt; y) left &amp;&amp;</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8">          aux (<span class="kw">function</span> x -&gt; x &gt; y) right <span class="kw">in</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">          aux (<span class="kw">function</span> x -&gt; test x &amp;&amp; x &lt; y) left &amp;&amp;</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">          aux (<span class="kw">function</span> x -&gt; test x &amp;&amp; x &gt; y) right <span class="kw">in</span></a>
 <a class="sourceLine" id="cb15-9" data-line-number="9">  aux (<span class="kw">function</span> _ -&gt; <span class="kw">true</span>) t;;</a></code></pre></div>
+<p>Unfortunately the computational complexity of this solution is quadratic of the tree size. Two more efficient solutions are found in the complete answers slide.</p>
 </section><section id="ocaml-code-that-was-used-today" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>OCaml code that was used today</h2>
 <p>Complete answers to the exercises:</p>
 <ul>
-<li>Download <a href="/fp2018/ocaml/to-appear-after-the-class.ml"><code>03-exercise.ml</code></a></li>
+<li><p>Download <a href="/fp2018/ocaml/to-appear-after-the-class.ml"><code>03-exercise.ml</code></a></p></li>
+<li><p>Download <a href="/fp2018/ocaml/03-exercise.ml"><code>03-exercise.ml</code></a></p></li>
 </ul>
-<!--
-- Download [`03-exercise.ml`](/fp2018/ocaml/03-exercise.ml)
--->
 </section></section>
 <section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="assignment" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Assignment</h1></section><section id="assignment-to-be-announced" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>Assignment to be announced</h2>
