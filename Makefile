@@ -55,7 +55,7 @@ docs/slide/%.html: $(STML_DEV) slide/%.md
 	@# slide/*.md -> tmp/*.html
 	@echo "pandoc:    $(md) => $(html1)"
 	@/usr/local/bin/pandoc lib/slide.yaml lib/slide-header.md $(md) lib/slide-footer.md\
-	  --from markdown+smart \
+	  --from markdown+smart+fenced_code_attributes \
 	  --to revealjs+smart --slide-level=2 \
 	  --template lib/default.revealjs \
 	  --standalone \

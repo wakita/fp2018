@@ -1,0 +1,337 @@
+<!DOCTYPE html><html class=" js no-mobile desktop no-ie safari safari538 fp2018-section tmp-section w-400 gt-240 gt-320 lt-480 lt-640 lt-768 lt-800 lt-1024 lt-1280 lt-1440 lt-1680 lt-1920 no-portrait landscape gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius cssreflections csstransforms csstransitions touch no-retina no-fontface domloaded" id="06-typing-page"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Ken Wakita (https://wakita.github.io/fp2018/)">
+  <meta name="dcterms.date" content="2018-10-18">
+  <title>FP: Day 7 Typing</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      .smallcaps{font-variant: small-caps;}
+      .line-block{white-space: pre-line;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="/fp2018/lib/kw.css">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '/fp2018/lib/reveal.js/css/print/pdf.css' : '/fp2018/lib/reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script><link rel="stylesheet" type="text/css" href="/fp2018/lib/reveal.js/css/print/paper.css">
+  <!--[if lt IE 9]>
+  <script src="/fp2018/lib/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]--><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/math/math.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/notes/notes.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/contrib/a11y/accessibility-menu.js?V=2.7.0"></script></head>
+<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;"><div id="MathJax_Message" style="display: none;"></div>
+  <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
+    <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
+
+<section style="top: 229px; display: block;" class="present">
+  <h1 class="title">FP: Day 7<br>Typing</h1>
+  <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/" class="uri">https://wakita.github.io/fp2018/</a>)</p>
+  <p class="date">Oct.&nbsp;18, 2018</p>
+</section>
+
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="overview" class="title-slide slide level1" style="top: 391.5px; display: block;"><h1>Overview</h1></section><section id="compiler-pipeline" class="slide level2 future" aria-hidden="true" style="top: 228.5px; display: block;">
+<h2>Compiler Pipeline</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">let</span> lexbuf outchan l =</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  ...... .......</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    (..........</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">       (......</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">          (.........</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">             (.........</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">                (.... !.....</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">                   (Alpha.f</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">                      (KNormal.f</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">                         (........</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">                            (.......... ........... .)))))))))</a></code></pre></div>
+</section></section>
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="types" class="title-slide slide level1" style="top: 391.5px; display: block;"><h1>Types</h1></section><section id="mincaml-types" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>MinCaml Types</h2>
+<p>Figure 2: MinCaml types on page 1, <a href="https://github.com/wakita/fp2018/raw/master/docs/mincaml/overview.pdf"><code>docs/mincaml/overview.pdf</code></a></p>
+<figure>
+<img alt="MinCaml Types" src="/fp2018/mincaml/overview/types.png" data-lazy-loaded=""><figcaption>MinCaml Types</figcaption>
+</figure>
+</section><section id="mincaml-types-as-1st-order-terms" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>MinCaml Types as 1st-order terms</h2>
+<p><span class="math display">\[\begin{align}
+\tau &amp; ::= \\
+   | &amp; \, \text {bool | int | float} \\
+   | &amp; \, \mathrm {FunctionalType}(\tau_1, \ldots, \tau_n, \tau) \\
+   | &amp; \, \mathrm {TupleType}(\tau_1, \ldots, \tau_n) \\
+   | &amp; \, \mathrm {ArrayType}(\tau) \\
+   | &amp; \, \alpha
+\end{align}\]</span></p>
+<figure>
+<img alt="MinCaml Types" src="/fp2018/mincaml/overview/types.png" data-lazy-loaded=""><figcaption>MinCaml Types</figcaption>
+</figure>
+</section><section id="the-mincaml-typing-rule" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>The MinCaml Typing Rule</h2>
+<p>Figure 3: MinCaml’s typing rule on page 2, overview.pdf.</p>
+<figure>
+<img alt="MinCaml Types" src="/fp2018/mincaml/overview/typing.png" data-lazy-loaded=""><figcaption>MinCaml Types</figcaption>
+</figure>
+</section><section id="the-format-of-typing-rules-e.g.-let" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>The Format of Typing Rules (e.g. <code>let</code>)</h2>
+<figure>
+<img alt="Rules for variable introduction (let) and usage" src="/fp2018/mincaml/overview/typing-let.png" data-lazy-loaded=""><figcaption>Rules for variable introduction (<code>let</code>) and usage</figcaption>
+</figure>
+<dl>
+<dt>Assumptions</dt>
+<dd><ol type="1">
+<li><p>The type of <span class="math inline">\(e_1\)</span> is <span class="math inline">\(\tau_1\)</span></p></li>
+<li><p>Under a typing environment, where the type of <span class="math inline">\(x\)</span> is <span class="math inline">\(\tau_1\)</span>, the type of <span class="math inline">\(e_2\)</span> is <span class="math inline">\(\tau_2\)</span>.</p></li>
+</ol>
+</dd>
+<dt>Conclusion</dt>
+<dd>The type of <span class="math inline">\(\texttt {let } x = e_1 \texttt { in } e_2\)</span> is <span class="math inline">\(\tau_2\)</span>.
+</dd>
+<dt>Semtanics of <code>let</code></dt>
+<dd>The <code>let</code> form binds a name locally. It introduces a varible <span class="math inline">\(x\)</span> whose value is the evaluation results of <span class="math inline">\(e_1\)</span>. The scope of <span class="math inline">\(x\)</span> is <span class="math inline">\(e_2\)</span> (<span class="math inline">\(x\)</span> is visible inside <span class="math inline">\(e_2\)</span>).
+</dd>
+</dl>
+</section><section id="example" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Example</h2>
+<p>Typing <code>let x = 1 in x * 2</code></p>
+<ol type="1">
+<li><p><span class="math inline">\(\Gamma, x:\text {int} \vdash x:\text {int}\)</span> because <span class="math inline">\(\Gamma, x: \text {int} \vdash \Gamma(x) = \text {int}\)</span>.</p></li>
+<li><p><span class="math inline">\(\Gamma, x:\text {int} \vdash 2: \text {int}\)</span> because 2 is an integer constant and the <em>constant rule</em>.</p></li>
+<li><p><span class="math inline">\(\Gamma, x:\text {int} \vdash \texttt {x * 2}: \text {int}\)</span> because of the operator rule for <code>*</code>, <span class="math inline">\(\texttt *: \text {int} \times \text {int} \rightarrow \text {int}\)</span>.</p></li>
+<li><p><span class="math inline">\(\Gamma \vdash 1:\text {int}\)</span> because 1 from the <em>constant rule</em>.</p></li>
+<li><p><span class="math inline">\(\Gamma \vdash \texttt {let x = 1 in x * 2}: \text {int}\)</span>, from the last two statements and the typing rule for <em>let</em>.</p></li>
+</ol>
+</section><section id="typing-rules-for-let-rec" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Typing Rules for <code>let rec</code></h2>
+<figure>
+<img alt="Typing Rules for let rec (the LHS)" src="/fp2018/mincaml/overview/typing-letrec.png" data-lazy-loaded=""><figcaption>Typing Rules for <code>let rec</code> (the LHS)</figcaption>
+</figure>
+<dl>
+<dt>Assumptions</dt>
+<dd><ol type="1">
+<li><p>Under a typing environment where <span class="math inline">\(x\)</span> is a function whose type is <span class="math inline">\(\tau_1 \rightarrow \ldots \tau_n \rightarrow \tau\)</span> and the types of <span class="math inline">\(y_1, \ldots, y_n\)</span> are <span class="math inline">\(\tau_1, \ldots, \tau_n\)</span>, respectively, the type of <span class="math inline">\(e_1\)</span> is <span class="math inline">\(\tau\)</span>. (When the types of formal and real arguments match, the function’s result type and body’s type should be the same.)</p></li>
+<li><p>Under a typing environment where <span class="math inline">\(x\)</span> is a function whose type is <span class="math inline">\(\tau_1 \rightarrow \ldots \tau_n \rightarrow \tau\)</span>, the type of <span class="math inline">\(e_2\)</span> is <span class="math inline">\(\tau'\)</span>.</p></li>
+</ol>
+</dd>
+<dt>Conclusion</dt>
+<dd>The type of <span class="math inline">\(\texttt {let rec } x\ y_1 \ldots y_n = e_1 \texttt { in } e_2\)</span> is <span class="math inline">\(\tau'\)</span>.
+</dd>
+</dl>
+</section><section id="typing-rule-for-function-application" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Typing Rule for Function Application</h2>
+<figure>
+<img alt="Typing Rules for function applications (the RHS)" src="/fp2018/mincaml/overview/typing-letrec.png" data-lazy-loaded=""><figcaption>Typing Rules for function applications (the RHS)</figcaption>
+</figure>
+<dl>
+<dt>Assumptions</dt>
+<dd><ol type="1">
+<li><p>A function <span class="math inline">\(e\)</span> takes <span class="math inline">\(n\)</span> arguments and their types are <span class="math inline">\(\tau_1, \ldots \tau_n\)</span>.</p></li>
+<li><p>The types of <span class="math inline">\(e_1, \ldots e_n\)</span> are <span class="math inline">\(\tau_1, \ldots, \tau_n\)</span>, respectively.</p></li>
+</ol>
+<p>These two assumption demand that the types of the formal argument and the actual arguments match.</p>
+</dd>
+<dt>Conclusion</dt>
+<dd>The result type of a function application <span class="math inline">\(e\ e_1 \ldots e_n\)</span> is <span class="math inline">\(\tau\)</span>.
+</dd>
+</dl>
+</section></section>
+<section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="implementation-of-typing" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Implementation of Typing</h1></section><section id="typing.deref_..." class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>Typing.deref_...</code></h2>
+<p>A series of function that replaces occurrences of type variable by its contents</p>
+<dl>
+<dt><code>Typing.deref_typ</code></dt>
+<dd>Dereferencing of type variables for <code>Type.t</code>. The essencial code is:
+</dd>
+</dl>
+<div class="sourceCode" id="mycode" data-startfrom="11"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><a class="sourceLine" id="mycode-11" data-line-number="11"><span class="kw">let</span> <span class="kw">rec</span> deref_typ = <span class="kw">function</span></a>
+<a class="sourceLine" id="mycode-12" data-line-number="12">  ...</a>
+<a class="sourceLine" id="mycode-13" data-line-number="13"></a>
+<a class="sourceLine" id="mycode-14" data-line-number="14">  | Type.Var({ contents = <span class="dt">Some</span>(t) } <span class="kw">as</span> r) -&gt;</a>
+<a class="sourceLine" id="mycode-15" data-line-number="15">  <span class="kw">let</span> t' = deref_typ t <span class="kw">in</span></a>
+<a class="sourceLine" id="mycode-16" data-line-number="16">  r := <span class="dt">Some</span>(t');</a>
+<a class="sourceLine" id="mycode-17" data-line-number="17">  t'</a>
+<a class="sourceLine" id="mycode-18" data-line-number="18"></a>
+<a class="sourceLine" id="mycode-19" data-line-number="19">  ...</a></code></pre></div>
+<p>Other code recursively applies <code>deref_*</code> to the subcomponents.</p>
+</section><section id="occur-r-t" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>occur r t</code></h2>
+<p>Checks if a type varible <code>r</code> occurs in a type expression <code>t</code>.</p>
+<div class="sourceCode" id="cb2" data-startfrom="56"><pre class="sourceCode numberSource ocaml numberLines"><code class="sourceCode ocaml"><a class="sourceLine" id="cb2-56" data-line-number="56">  | Type.Var(r2) <span class="kw">when</span> r1 == r2        -&gt; <span class="kw">true</span></a>
+<a class="sourceLine" id="cb2-57" data-line-number="57">  | Type.Var({ contents = <span class="dt">None</span> })     -&gt; <span class="kw">false</span></a>
+<a class="sourceLine" id="cb2-58" data-line-number="58">  | Type.Var({ contents = <span class="dt">Some</span>(t2) }) -&gt; occur r1 t2</a></code></pre></div>
+</section><section id="unify-t1-t2" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>unify t1 t2</code></h2>
+<ul>
+<li><p><code>unify t1 t2</code> attempts unification on type variables <code>t1</code> and <code>t2</code>. Instead of computing substitution, type variables are replaced by assignment. This is one rare cases of side effects being used throughout the implementation of the MinCaml compiler.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb3-1" data-line-number="1">| Type.Var({ contents = <span class="dt">None</span> } <span class="kw">as</span> r1), _ -&gt; <span class="co">(* t1 is an undefined type variable *)</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">if</span> occur r1 t2 <span class="kw">then</span> <span class="dt">raise</span> (Unify(t1, t2));</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  r1 := <span class="dt">Some</span>(t2)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">| _, Type.Var({ contents = <span class="dt">None</span> } <span class="kw">as</span> r2) -&gt; <span class="co">(* t2 is an undefined type variable *)</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="kw">if</span> occur r2 t1 <span class="kw">then</span> <span class="dt">raise</span> (Unify(t1, t2));</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  r2 := <span class="dt">Some</span>(t1)</a></code></pre></div></li>
+<li><p>The structure of the <code>unify</code> function reflects the typing structure, namely <code>Type.t</code>.</p></li>
+<li><p>If it fails to unify <code>t1</code> and <code>t2</code>, it raises an exception: <code>raise (Unify(t1, t2))</code>.</p></li>
+<li><p>Note: <span class="math inline">\(x\)</span> and <span class="math inline">\(f(x)\)</span> are not unifiable.</p></li>
+</ul>
+</section><section id="g-env-e" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>g env e</code></h2>
+<p><code>g env e</code> examine the structure of <code>e</code>, identifies the typing rule related with that structure, then attempts to unify the assumptions and conclusions of the typing rule with the corresponding structure of <code>e</code>’s type.</p>
+</section><section id="the-mincaml-typing-rule-1" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>The MinCaml Typing Rule</h2>
+<p>Figure 3: MinCaml’s typing rule on page 2, overview.pdf.</p>
+<figure>
+<img data-src="/fp2018/mincaml/overview/typing.png" alt="MinCaml Types"><figcaption>MinCaml Types</figcaption>
+</figure>
+</section></section>
+<section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="back-to-top" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section></section>
+    </div>
+  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
+  FP: Day 7Typing
+  Ken Wakita (https://wakita.github.io/fp2018/)
+  Oct.&nbsp;18, 2018
+</div></div>
+
+  <script src="/fp2018/lib/reveal.js/lib/js/head.min.js"></script>
+  <script src="/fp2018/lib/reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+        height: 1024,
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '/fp2018/lib/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/math/math.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    
+
+</body></html>
