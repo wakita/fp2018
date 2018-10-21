@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ken Wakita" />
+  <title>FP: Final Report (Tentative)</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw-page.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FP: Final Report (Tentative)</h1>
+<p class="author">Ken Wakita</p>
+</header>
+<p>13:20-15:50 at W831</p>
+<hr />
+<h1 id="submission">Submission</h1>
+<dl>
+<dt>Method of Submission</dt>
+<dd><p><a href="https://secure.ocw.titech.ac.jp/ocwi/">OCW-i</a></p>
+<p>Convert/save your essay as a single PDF file and upload it at the respective page of OCW-i</p>
+</dd>
+<dt>Due date</dt>
+<dd>This is a tentative announcement . Due date will be announced on OCW-i
+</dd>
+<dt>Delayed Submission</dt>
+<dd>Each submission is weighed according to half-value period of 10 days. That means if you submit a perfect answer 30 days after the due date, you will receive <span class="math inline">\(1/8\)</span> the full points. In other words, you lose <span class="math inline">\(1 - 1/2^{1/10} \approx 6.7\text {%}\)</span> points each day after the due date has passed. It is very wise to keep the due date.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+</dd>
+</dl>
+<h1 id="assignment">Assignment</h1>
+<p>Complete projects A and B. The report being submitted should contain essays on both project in a single PDF file.</p>
+<p>Answers to questions may seem simple. If you think that they can be answered in a short paragraph please think deeply more. At least take time to understand the schematic definitions described in <code>mincaml/overview.pdf</code>. The implementation may give insight to those who are more implementation-oriented people. If you think enough you may discover more profound issues being questioned on you.</p>
+<h1 id="project-a">Project A</h1>
+<p>Answer either question. If you answer both questions the better answer will be chosen for your evaluation.</p>
+<ol type="1">
+<li><p>What’s <span class="math inline">\(\alpha\)</span>-conversion for? What kind of problems we will see if <span class="math inline">\(\alpha\)</span>-conversion were not applied? Find Min-Caml programs that give incorrect answers in absence of proper <span class="math inline">\(\alpha\)</span>-conversion.</p>
+<p>Note: You may want to consider the reason why <code>inline.ml</code> refers to <code>Alpha.g</code>.</p></li>
+<li><p>Are optimization modules interdependent? Yes, but in what way? Find a pair of optimization modules <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> such that for a program <span class="math inline">\(P\)</span>, <span class="math inline">\(B\)</span> is effective when it is applied after <span class="math inline">\(A\)</span>:</p>
+<p><span class="math display">\[^\exists P. B(P) = P \text { but } B(A(P)) \not= A(P)\]</span></p></li>
+</ol>
+<h1 id="project-b">Project B</h1>
+<p>Answer either question. If you answer both questions the better answer will be chosen for your evaluation.</p>
+<ol type="1">
+<li><p>Explain in detail the mechanism described in <a href="https://wakita.github.io/fp2018/mincaml/overview.pdf">Figure 16, mincaml/overview.pdf</a>.</p>
+<ul>
+<li><p>Compare this algorithm with two previous algorithms (Figure 14 and Figure 15). Present a Min-Caml code fragment examples that exhibits superiority of the last algorithm.</p></li>
+<li><p>For the examples you gave above, estimate the number of <code>make_closure</code>, <code>apply_direct</code>, and <code>apply_closure</code> executed at runtime when the generated code is executed.</p></li>
+</ul></li>
+<li><p>Explain how min-caml compiler is organized to achieve the goal of being a multi-targeted native code compiler. (A multi-targeted native code compiler can generate native code targeted for different CPU architectures.)</p></li>
+</ol>
+<hr />
+<p><strong>Back to <a href="/fp2018/page/">Top</a></strong></p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>この半減期はトイチ金融よりも遥かに非情なので気をつけて下さい．/ This half-value period is much worse than the interest rate of the meanest loan office; time is money.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+</body>
+</html>

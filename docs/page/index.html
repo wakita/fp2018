@@ -12,22 +12,25 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css">
-  <link rel="stylesheet" href="/fp2018/lib/kw.css">
-  <link rel="stylesheet" href="/fp2018/lib/kw-page.css">
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw-page.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">Functional Programming</h1>
 <p class="author">Ken Wakita</p>
 </header>
 <p>13:20-15:50 at W831</p>
+<hr />
 <h1 id="news">News</h1>
 <ul>
-<li><a href="https://blog.janestreet.com/work-on-the-ocaml-compiler-at-jane-street/">One more reason to learn about functional programming and compiler construction</a> — Jane Street is hiring (Dec 20, 2017)</li>
+<li><p><strong>Important:</strong> <a href="/fp2018/page/assignment3.html">Tentative announcemnt of the final report</a></p></li>
+<li><p><a href="https://blog.janestreet.com/work-on-the-ocaml-compiler-at-jane-street/">One more reason to learn about functional programming and compiler construction</a> — Jane Street is hiring (Dec 20, 2017)</p></li>
 </ul>
 <h2 id="overview">Overview</h2>
 <ul>
@@ -56,10 +59,9 @@
 <li><a href="/fp2018/slide/05-parser.html#/reading-assignment-on-unification">Reading assignment on Unification</a></li>
 <li><strong>There will be a quiz on unification at the beggining of the next class</strong></li>
 </ul>
-<h2 id="day-6-oct.18-typing">Day 6 (Oct. 18): <a href="/fp2018/slide/07-typing.html">Typing</a><!--, [A sample quiz](/fp2018/quiz/1019-unification.html) --></h2>
+<h2 id="day-6-oct.18-typing-a-sample-quiz">Day 6 (Oct. 18): <a href="/fp2018/slide/07-typing.html">Typing</a>, <a href="/fp2018/quiz/1018-unification.html">A sample quiz</a></h2>
+<h2 id="day-7-oct.22-k-normalization-and-alpha-conversion">Day 7 (Oct. 22): <a href="/fp2018/slide/07-knf.html">K-Normalization and <span class="math inline">\(\alpha\)</span> conversion</a><!-- , [Quiz](/fp2018/quiz/1023-unification.html) --></h2>
 <!--
-
-## Day 8 (Oct. 25): [K-Normalization and $\alpha$ conversion](/fp2018/slide/08-knf.html), [Quiz](/fp2018/quiz/1023-unification.html)
 
 ## Day 9 (Oct. 29): [Optimization 1](/fp2018/slide/09-optimize.html), Checkout the [`ocamlinit.ml`](https://github.com/wakita/fp2018/blob/master/ocamlinit.ml) file.
 
