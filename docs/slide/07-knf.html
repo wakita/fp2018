@@ -130,8 +130,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
 #MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
 .MathJax_Error {color: #CC0000; font-style: italic}
-</style><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/contrib/a11y/accessibility-menu.js?V=2.7.0"></script></head>
-<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;"><div id="MathJax_Message" style="display: none;"></div>
+</style></head>
+<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;">
   <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
     <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
 
@@ -167,9 +167,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb2-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">...</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="kw">let</span> typing  = compose Typing.f ast</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw">let</span> knf     = compose KNormal.f typing</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw">let</span> alpha   = compose Alpha.f knf</a></code></pre></div>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="kw">let</span> lex     = <span class="dt">Lexing</span>.from_string</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw">let</span> ast     = compose (Parser.<span class="dt">exp</span> Lexer.token) <span class="dt">Lexing</span>.from_string</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw">let</span> typing  = compose Typing.f ast</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">let</span> knf     = compose KNormal.f typing</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="kw">let</span> alpha   = compose Alpha.f knf</a></code></pre></div>
 </section></section>
 <section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="k-normalization" class="title-slide slide level1" style="top: 301px; display: block;"><h1>K-Normalization</h1></section><section id="the-syntax-of-knf" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>The Syntax of KNF</h2>

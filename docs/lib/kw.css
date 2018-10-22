@@ -51,6 +51,11 @@ code.sourceCode {
   line-height: 1.2;
 }
 
+strong {
+  color: #d22;
+  font-size: 150%;
+}
+
 /*
 .lineNumbers pre {
   font-family: source-code-pro, monospace;

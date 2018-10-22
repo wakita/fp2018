@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Quiz (October 22) ID: Name:</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/kw.css" />
+  <link rel="stylesheet" href="/fp2018/lib/kw-quiz.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Quiz (October 22)<br/>ID:<br/>Name:</h1>
+</header>
+<hr />
+<h1 id="definitions">Definitions</h1>
+<p>Explanations in this section are picked up from your reading assignment on “Unification (Computer Science)” page of Wikipedia. They are provided for your convenience. You do not have to read them to solve the questions that appear in the next section.</p>
+<h2 id="first-order-terms">First-order terms</h2>
+<p>Given a set <span class="math inline">\(V\)</span> of <em>variable symbols</em>, a set <span class="math inline">\(C\)</span> of <em>constant symbols</em> and sets <span class="math inline">\(F_n\)</span> of <span class="math inline">\(n\)</span>-ary <em>function symbols</em>, also called operator symbols, for each natural number <span class="math inline">\(n \ge 1\)</span>, the set of (unsorted first-order) <em>terms</em> <span class="math inline">\(T\)</span> is recursively defined to be the smallest set with the following properties:</p>
+<ul>
+<li>every variable symbol is a term: <span class="math inline">\(V \subseteq T\)</span>,</li>
+<li>every constant symbol is a term: <span class="math inline">\(C \subseteq T\)</span>,</li>
+<li>from every <span class="math inline">\(n\)</span> terms <span class="math inline">\(t_1, \ldots, t_n\)</span>, and every <span class="math inline">\(n\)</span>-ary function symbol <span class="math inline">\(f \in F_n\)</span>, a larger term <span class="math inline">\(f(t_1, \ldots,t_n)\)</span> can be built.</li>
+</ul>
+<h2 id="substitution">Substitution</h2>
+<p>A <em>substitution</em> is a mapping <span class="math inline">\(\sigma: V \rightarrow T\)</span> from variables to terms; the notation <span class="math inline">\(\{ x_1 \mapsto t_1, \ldots, x_k \mapsto t_k \}\)</span> refers to a substitution mapping each variable <span class="math inline">\(x_i\)</span> to the term <span class="math inline">\(t_i\)</span>, for <span class="math inline">\(i=1, \ldots, k\)</span>, and every other variable to itself. <em>Applying</em> that substitution to a term <span class="math inline">\(t\)</span> is written in postfix notation as <span class="math inline">\(t \{x_1 \mapsto t_1, \ldots, x_k \mapsto t_k \}\)</span>; it means to (simultaneously) replace every occurrence of each variable <span class="math inline">\(x_i\)</span> in the term <span class="math inline">\(t\)</span> by <span class="math inline">\(t_i\)</span>. The result <span class="math inline">\(t\sigma\)</span> of applying a substitution <span class="math inline">\(\sigma\)</span> to a term <span class="math inline">\(t\)</span> is called an <em>instance</em> of that term <span class="math inline">\(t\)</span>.</p>
+<h2 id="generalization-specialization">Generalization, specialization</h2>
+<p>If a term <span class="math inline">\(t\)</span> has an instance equivalent to a term <span class="math inline">\(u\)</span>, that is, if <span class="math inline">\(t\sigma \equiv u\)</span> for some substitution <span class="math inline">\(\sigma\)</span>, then <span class="math inline">\(t\)</span> is called <em>more general</em> than <span class="math inline">\(u\)</span>, and <span class="math inline">\(u\)</span> is called <em>more special</em> than, or <em>subsumed</em> by, <span class="math inline">\(t\)</span>.</p>
+<p>A substitution <span class="math inline">\(\sigma\)</span> is <em>more special</em>, or <em>subsumed</em> by, than a substitution <span class="math inline">\(\tau\)</span> if <span class="math inline">\(t\sigma\)</span> is more special than <span class="math inline">\(t\tau\)</span> for each term <span class="math inline">\(t\)</span>. We also say that <span class="math inline">\(\tau\)</span> is more general than <span class="math inline">\(\sigma\)</span>.</p>
+<h2 id="unification-problem-solution-set">Unification problem, solution set</h2>
+<p>A <em>unification problem</em> is a finite set <span class="math inline">\(\{ l_1 \doteq r_1, \ldots, l_n \doteq r_n \}\)</span> of potential equations, where <span class="math inline">\(l_i, r_i \in T\)</span>. A substitution <span class="math inline">\(\sigma\)</span> is a <em>solution</em> of that problem if <span class="math inline">\(l_i\sigma \equiv r_i\sigma\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>. Such a substitution is also called a <em>unifier</em> of the unification problem. For example, if <span class="math inline">\(\oplus\)</span> is associative, the unification problem <span class="math inline">\(\{ x \oplus a \doteq a \oplus x \}\)</span> has the solutions <span class="math inline">\(\{x \mapsto a\}\)</span>, <span class="math inline">\(\{x \mapsto a \oplus a\}\)</span>, <span class="math inline">\(\{x \mapsto a \oplus a \oplus a\}\)</span>, etc., while the problem <span class="math inline">\(\{ x \oplus a \doteq a \}\)</span> has no solution.</p>
+<p>For a given unification problem, a set <span class="math inline">\(S\)</span> of unifiers is called <em>complete</em> if each solution substitution is subsumed by some substitution <span class="math inline">\(\sigma \in S\)</span>; the set <span class="math inline">\(S\)</span> is called <em>minimal</em> if none of its members subsumes another one.</p>
+<h1 id="questions">Questions</h1>
+<p>In the following <span class="math inline">\(a, b, c, d\)</span> are used as constant symbols that denote different constants, <span class="math inline">\(x, y, z, w\)</span> as variable symbols, and <span class="math inline">\(f, g, h\)</span> as function symbols.</p>
+<p>In the following, we assume <span class="math inline">\(\equiv\)</span> is literal (syntactic) identity of terms.</p>
+<h2 id="q1-first-order-terms">Q1 (First-order terms)</h2>
+<p>Choose first-order terms.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">□ <span class="math inline">\(()\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\(a\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\(a, b\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\((a, b)\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\([a, b]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">□ <span class="math inline">\(f()\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\(f(a)\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\(f(a, b)\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\(f(f(a))\)</span></td>
+<td style="text-align: left;">□ <span class="math inline">\(f(a), g(b)\)</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="q2-substitution">Q2 (Substitution)</h2>
+<p>Compute the result of the following substitutions</p>
+<ul>
+<li><p><span class="math inline">\(x \{ x \mapsto a \}\)</span></p></li>
+<li><p><span class="math inline">\(x \{ x \mapsto f(a, x) \}\)</span></p></li>
+<li><p><span class="math inline">\(f(x, a, g(z), y) \{ x \mapsto h(a, y, z), z \mapsto b \}\)</span></p></li>
+</ul>
+<h2 id="q3-generalization-specialization">Q3 (Generalization, specialization)</h2>
+<p>For each pair of first-order terms <span class="math inline">\(t\)</span> and <span class="math inline">\(u\)</span>, identify if <span class="math inline">\(t\)</span> is more general than <span class="math inline">\(u\)</span>. If it is, find an appropriate substitution <span class="math inline">\(\sigma\)</span> and answer <span class="math inline">\(t\sigma = u\)</span>. If it is not, answer “No”.</p>
+<ul>
+<li><p><span class="math inline">\(t = a, u = b\)</span></p></li>
+<li><p><span class="math inline">\(t = x, u = a\)</span></p></li>
+<li><p><span class="math inline">\(t = x, u = g(y)\)</span></p></li>
+<li><p><span class="math inline">\(t = f(a, x), u = f(y, b)\)</span></p></li>
+<li><p><span class="math inline">\(t = f(a, x), u = g(y, b)\)</span></p></li>
+<li><p><span class="math inline">\(t = f(x, x), u = f(y, g(a))\)</span></p></li>
+</ul>
+<h2 id="q4-unification-problem">Q4 (Unification problem)</h2>
+<p>For each unification problem, find a solution <span class="math inline">\(\sigma\)</span>. If the unification problem is not solvable, answer “No”.</p>
+<ul>
+<li><p><span class="math inline">\(\{ x \doteq a, y \doteq b \}\)</span></p></li>
+<li><p><span class="math inline">\(\{ x \doteq a, x \doteq b \}\)</span></p></li>
+<li><p><span class="math inline">\(\{ f(a, x) \doteq f(y, g(a)) \}\)</span></p></li>
+<li><p><span class="math inline">\(\{ f(x, x) \doteq f(y, g(a)) \}\)</span></p></li>
+<li><p><span class="math inline">\(\{ f(x, x) \doteq f(g(y), g(a)) \}\)</span></p></li>
+<li><p><span class="math inline">\(\{ f(x, g(h(a))) \doteq f(g(y), g(z)) \}\)</span></p></li>
+</ul>
+</body>
+</html>
