@@ -16,7 +16,7 @@
   <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -29,13 +29,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -163,7 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb1-16" data-line-number="16">                         (........</a>
 <a class="sourceLine" id="cb1-17" data-line-number="17">                            (.......... ........... .)))))))))</a></code></pre></div>
 </section></section>
-<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="constant-folding" class="title-slide slide level1" style="top: 301px; display: block;"><h1>Constant Folding</h1></section><section id="constant-folding-format" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="constant-folding" class="title-slide slide level1" style="top: 391.5px; display: block;"><h1>Constant Folding</h1></section><section id="constant-folding-format" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>Constant Folding Format</h2>
 <p><span class="math display">\[\begin {align}
 {\cal F}&amp;: \text {KNormal.t M.t} \rightarrow \text {KNormal.t} \rightarrow \text {KNormal.t} \\
@@ -299,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   \varepsilon(\text {let } &amp;x = e_1 \text { in } e_2) = \\
 &amp; \begin {cases}
   \varepsilon(e_2) &amp;
-  \neg \mathit {effect}(\varepsilon(e_1)) \wedge \neg \mathit {effect}(\varepsilon(e_2))\, \wedge\\
+  \neg \mathit {effect}(\varepsilon(e_1)) \wedge\\
   &amp; x \not\in \mathit {free\_variables}(\varepsilon(e_2)) \\
   \text {let } x = \varepsilon(e_1) \text { in } \varepsilon(e_2) &amp; \text {Otherwise}
 \end {cases}
@@ -308,19 +306,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb7-2" data-line-number="2">      <span class="kw">let</span> e1' = f e1 <span class="kw">in</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">      <span class="kw">let</span> e2' = f e2 <span class="kw">in</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">      <span class="kw">if</span> effect e1' || S.mem x (fv e2') <span class="kw">then</span> Let((x, t), e1', e2') <span class="kw">else</span> e2'</a></code></pre></div>
-</section><section id="question" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
-<h2>Question</h2>
-<ul>
-<li><p>What if</p>
-<p><span class="math display">\[\begin {align}
-    \varepsilon(\text {let } &amp;x = e_1 \text { in } e_2) = \\
-  &amp; \begin {cases}
-    \varepsilon(e_2) &amp;
-    \neg \mathit {effect}(\varepsilon(e_2))\, \wedge x \not\in \mathit {fv}(\varepsilon(e_2)) \\
-    \text {let } x = \varepsilon(e_1) \text { in } \varepsilon(e_2) &amp; \text {Otherwise}
-  \end {cases}
-  \end {align}\]</span></p></li>
-</ul>
+<!--
+## Question
+
+- What if 
+
+    $$\begin {align}
+      \varepsilon(\text {let } &x = e_1 \text { in } e_2) = \\
+    & \begin {cases}
+      \varepsilon(e_2) &
+      \neg \mathit {effect}(\varepsilon(e_2))\, \wedge x \not\in \mathit {fv}(\varepsilon(e_2)) \\
+      \text {let } x = \varepsilon(e_1) \text { in } \varepsilon(e_2) & \text {Otherwise}
+    \end {cases}
+    \end {align}$$
+-->
 <!--
 - Is there a case such as the following?:
 
@@ -384,7 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section></section>
 <section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="back-to-top" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section></section>
     </div>
-  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
+  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
   Optimization
   Ken Wakita (https://wakita.github.io/fp2018/)
   Nov.&nbsp;1, 2018
