@@ -26,6 +26,8 @@ let assoc_let_p = "print(let x = let y = 1 in let z = 2 in y + z in x)"
 let assoc_letrec_p = "print(let x = let rec f x = x + 1 in f 1 in x)"
 let assoc_tuple_p = "print(let x = (1, 2) in let (a, b) = x in a + b)"
 let constfold_p = "print(let x = 1 in let y = 2 in if y - 1 = x then x + y else y)"
+let inline_p = "print(let rec f n = if n <= 1 then 1 else f(n - 2) + f(n - 1) in f 5)"
+let inline_p2 = "print(let rec f n = if n = 0 then 1 else n + f (n - 1) in f(10))"
 
 let beta      = compose Beta.f alpha
 let assoc     = compose Assoc.f alpha
