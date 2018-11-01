@@ -1,8 +1,8 @@
 (* FP-style function application *)
 
-let a = 3 in
-let b = 4 in
-let rec f x y = a * x + b * y in
+let a = 3;;
+let b = 4;;
+let rec f x y = a * x + b * y;;
 Printf.printf "FP-style: %d\n" (f 5 6);;
 
 (* Emultation of the C-style calling convention using the closure technique *)
@@ -13,12 +13,12 @@ Printf.printf "FP-style: %d\n" (f 5 6);;
  **)
 let apply_2args_2freevars closure arg1 arg2 =
   let a_function_implementation, (fv1, fv2) = closure in
-  a_function_implementation arg1 arg2 fv1 fv2 in
+  a_function_implementation arg1 arg2 fv1 fv2;;
 
 let rec f_implementation x y a b =
-  a * x + b * y in
+  a * x + b * y;;
 
-let a = 3 in
-let b = 4 in
-let closure = (f_implementation, (a, b)) in
+let a = 3;;
+let b = 4;;
+let closure = (f_implementation, (a, b));;
 Printf.printf "Closure-call: %d\n" (apply_2args_2freevars closure 5 6)
