@@ -1,0 +1,383 @@
+<!DOCTYPE html><html class=" js no-mobile desktop no-ie safari safari538 fp2018-section tmp-section w-400 gt-240 gt-320 lt-480 lt-640 lt-768 lt-800 lt-1024 lt-1280 lt-1440 lt-1680 lt-1920 no-portrait landscape gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius cssreflections csstransforms csstransitions touch no-retina no-fontface domloaded" id="13-register-page"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Ken Wakita (https://wakita.github.io/fp2018/)">
+  <title>Register Allocation</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      .smallcaps{font-variant: small-caps;}
+      .line-block{white-space: pre-line;}
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="/fp2018/lib/kw.css">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '/fp2018/lib/reveal.js/css/print/pdf.css' : '/fp2018/lib/reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script><link rel="stylesheet" type="text/css" href="/fp2018/lib/reveal.js/css/print/paper.css">
+  <!--[if lt IE 9]>
+  <script src="/fp2018/lib/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]--><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/math/math.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/notes/notes.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;">
+  <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
+    <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
+
+<section style="top: 229px; display: block;" class="present">
+  <h1 class="title">Register Allocation</h1>
+  <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/">https://wakita.github.io/fp2018/</a>)</p>
+  <p class="date">Nov 12, 2018</p>
+</section>
+
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="register-allocation-no-targetting-no-spilling" class="title-slide slide level1" style="top: 120px; display: block;"><h1>Register Allocation<br>No targetting, No Spilling</h1></section><section id="register-format" class="slide level2 future" aria-hidden="true" style="top: 0px; display: block;">
+<h2>“Register” Format</h2>
+<span class="math display">\[\newcommand\R{{\cal R}}
+\newcommand\r{\mathtt {R}}
+\newcommand\T{{\cal T}}
+\newcommand\eps{{\varepsilon}}
+\newcommand\la{{\leftarrow}}
+\newcommand\ra{{\rightarrow}}
+\newcommand\zdest{{z_{\text {dest}}}}
+\newcommand\Econt{{E_{\text {cont}}}}
+\newcommand\Econtp{{E'_{\text {cont}}}}
+\newcommand\dom{{\mathit {dom}}}\]</span>
+
+<p><span class="math display">\[\begin {align}
+\R^p :&amp; \text {Asm.prog} \rightarrow \text {Asm.prog} \\
+\R^f :&amp; \text {Asm.fundef} \rightarrow \text {Asm.fundef} \\
+\R^E :&amp; \text {Id.t M.t} \rightarrow
+        \text {Asm.t} \times \text {Id.t} \times \text {Asm.t} \rightarrow \\
+&amp;       \text {Asm.t} \times \text {Id.t M.t} \\
+&amp; \R^E_\varepsilon(E, \zdest, E_{\text {cont}}) = (e', \varepsilon') \\
+\R^e :&amp; \text {Id.t M.t} \rightarrow
+        \text {Asm.exp} \times \text {Id.t} \times \text {Asm.t} \rightarrow \\
+&amp;       \text {Asm.t} \times \text {Id.t M.t} \\
+&amp; \R^e_\varepsilon(e, \zdest, E_{\text {cont}}) = (e', \varepsilon')
+\end {align}\]</span></p>
+</section><section id="regalloc-for-a-program" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for a Program</h2>
+<p><span class="math display">\[\begin {align}
+\R^p((\{D_1, \ldots, D_n\}), E) = (&amp;\{\R^f(D_1), \ldots, \R^f(D_n)\}, \\
+&amp; \R^E_\emptyset(E, x, ()))
+\end {align}\]</span></p>
+<ul>
+<li><span class="math inline">\(x\)</span> is a fresh dummy variable</li>
+</ul>
+</section><section id="regalloc-for-a-function-definition" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for a Function Definition</h2>
+<p><span class="math display">\[\begin {align}
+\R^f&amp;(\mathtt {L}_x(y_1, \ldots, y_n) = E) =\\
+&amp; \mathtt L_x(\r_1, \ldots, \r_n) = \R^E_{x \mapsto \r_0, y_1 \mapsto \r_1, \ldots, y_n \mapsto \r_n} (E, \r_0, \r_0)
+\end {align}\]</span></p>
+<ul>
+<li>Function call API
+<ul>
+<li>Closure is given by <span class="math inline">\(\r_0\)</span></li>
+<li>Actual arguments are passed via <span class="math inline">\(\r_1, \ldots, \r_n\)</span></li>
+<li>The result of computation by the function should be passed by <span class="math inline">\(\r_0\)</span> (the second argument <span class="math inline">\(\r_0\)</span> of <span class="math inline">\(\R^E\)</span>)</li>
+<li>The value of function definition is the function itself (the last argument <span class="math inline">\(\r_0\)</span> of <span class="math inline">\(\R^E\)</span>)</li>
+</ul></li>
+</ul>
+</section><section id="regalloc-for-commands" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Commands</h2>
+<p>When <span class="math inline">\(x\)</span> is a register (1/2)</p>
+<p><span class="math display">\[\begin {align}
+\R_\eps^E&amp;((r \la e, E), \zdest, \Econt) = ((r \la E'; E''), \eps'') \\
+&amp; \text {where } \Econtp = (\zdest \la E; \Econt) \\
+&amp; \quad \R_\eps^e(e, r, \Econtp) = (E', \eps') \\
+&amp; \quad \R_{\eps'}^E(E, \zdest, \Econt) = (E'', \eps'') \\
+\end {align}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\zdest\)</span>: desitination register</p></li>
+<li><p><span class="math inline">\(\Econt\)</span>: the rest of the instruction sequence</p></li>
+<li><p>The meaning of <span class="math inline">\((E, \zdest, \Econt)\)</span> in <span class="math inline">\(\R_\eps^E(E, \zdest, \Econt)\)</span>:</p>
+<ul>
+<li>Execute <span class="math inline">\(E\)</span>; store the result in <span class="math inline">\(\zdest\)</span>; and continue to <span class="math inline">\(\Econt\)</span></li>
+</ul></li>
+</ul>
+</section><section id="regalloc-for-commands-1" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Commands</h2>
+<p><span class="math display">\[\begin {align}
+\R_\eps^E&amp;((r \la e, E), \zdest, \Econt) = ((r \la E'; E''), \eps'') \\
+&amp; \text {where } \Econtp = (\zdest \la E; \Econt) \\
+&amp; \quad \R_\eps^e(e, r, \Econtp) = (E', \eps') \\
+&amp; \quad \R_{\eps'}^E(E, \zdest, \Econt) = (E'', \eps'') \\
+\end {align}\]</span></p>
+<ol type="1">
+<li><p>Try to allocate register: <span class="math inline">\(\zdest \la (r \la e; E); \Econt\)</span></p></li>
+<li><p>Register allocte <span class="math inline">\(e\)</span>, specifying <span class="math inline">\(r\)</span> as its destination and <span class="math inline">\(\Econtp = (\zdest \la E; \Econt)\)</span> as its continuation.</p></li>
+<li><p>Register allocate <span class="math inline">\(E\)</span>, specifying <span class="math inline">\(\zdest\)</span> as its destination and <span class="math inline">\(\Econt\)</span> as its continuation.</p></li>
+<li><p>Combine the results</p></li>
+</ol>
+</section><section id="regalloc-for-commands-2" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Commands</h2>
+<p>When <span class="math inline">\(x\)</span> is not a register</p>
+<p><span class="math display">\[\begin {align}
+\R_\eps^E&amp;((x \la e, E), \zdest, \Econt) = \\
+&amp; ((r \la E'; E''), \eps'') \\
+\\
+&amp; \text {where } \Econtp = (\zdest \la E; \Econt) \\
+&amp; \quad \R_\eps^e(e, x, \Econtp) = (E', \eps') \\
+&amp; \quad r \not\in \{\eps'(y) \,|\, y \in \mathit {FV}(\Econtp)\} \\
+&amp; \quad \R_{\eps', x \mapsto r}^E(E, \zdest, \Econt) = (E'', \eps'')
+\end {align}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(r\)</span> is a fresh register.</p></li>
+<li><p>Similar to the previous case. Find an unused register <span class="math inline">\(r\)</span> for <span class="math inline">\(x\)</span>.</p></li>
+</ul>
+</section><section id="regalloc-for-references" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for References</h2>
+<p><span class="math display">\[\R_\eps^e(x, \zdest, \Econt) = (\eps(x), \Econt)\]</span></p>
+<ul>
+<li>Reference to a variable (<span class="math inline">\(x\)</span>) is converted to reference to its corresponding register (<span class="math inline">\(\eps(x)\)</span>).</li>
+</ul>
+</section><section id="regalloc-for-assignments" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Assignments</h2>
+<p><span class="math display">\[\begin {align}
+\R_\eps^e(x.(y) \la z, \zdest, \Econt) &amp;= (\eps(x).(\eps(y)) \la \eps(z), \eps) \\ \\
+\R_\eps^e(\mathtt {save}(x, y), \zdest, \Econt) &amp;= (\mathtt {save}(\eps(x), y), \eps) \\ \\
+\R_\eps^e(\mathtt {restore}(y), \zdest, \Econt) &amp;= (\mathtt {restore}(y), \eps)
+\end {align}\]</span></p>
+<ul>
+<li><p>Assignments are issued for preallocated registers/stack elements and do not require additional register allocation (<span class="math inline">\(\eps\)</span> is preserved)</p></li>
+<li><p><span class="math inline">\(\zdest\)</span> is not (at least explicitly) updated in these rules because assignments does not give results.</p></li>
+</ul>
+</section><section id="regalloc-for-closure-calls" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Closure Calls</h2>
+<p><span class="math display">\[\begin {align}
+\R_\eps^e&amp;(\mathtt {apply\_closure}(x, y_1, \ldots, y_n), \zdest, \Econt) = \\
+(&amp;(\mathtt {save}(\eps(z_1), z_1);\\
+&amp; \ldots \\
+&amp; \mathtt {save}(\eps(z_n), z_n);\\
+&amp; \mathtt {apply\_closure}(\eps(x), \eps(y_1), \ldots, \eps(y_n))), \emptyset) \\ \\
+&amp; \text {where } \{ z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{ \zdest \}) \cap \dom(\eps)
+\end {align}\]</span></p>
+</section><section id="regalloc-for-closure-calls-1" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Closure Calls</h2>
+<p><span class="math display">\[\text {where } \{ z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{ \zdest \}) \cap \dom(\eps)\]</span></p>
+<ul>
+<li><p>The set of variables <span class="math inline">\(\{z_1, \ldots, z_n\}\)</span> that</p>
+<ul>
+<li><p>are already allocated (<span class="math inline">\({} \cap \dom(\eps)\)</span>),</p></li>
+<li><p>are live (used in the continuation; <span class="math inline">\(\mathit {FV}(\Econt)\)</span>), and</p></li>
+<li><p>are not the target (<span class="math inline">\({} \setminus \,\{ \zdest \}\)</span>).</p></li>
+</ul></li>
+</ul>
+</section><section id="regalloc-for-conditionals" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Conditionals</h2>
+<p><span class="math display">\[\begin {align}
+\R_\eps(&amp;\text {if } x = y \text { then } E_1 \text { else } E_2, \zdest, \Econt) \\
+(&amp;(\mathtt {save}(\eps(z_1), z_1); \\
+&amp; \ldots \\
+&amp; \mathtt {save}(\eps(z_n), z_n); \\
+&amp; \text {if } \eps(x) = \eps(y) \text { then } E_1' \text { else } E_2'), \eps') \\
+\\
+&amp; \text {where } \R_\eps^E(E_1, \zdest, \Econt) = (E_1', \eps_1) \\
+&amp; \quad \R_\eps^E(E_2, \zdest, \Econt) = (E_2', \eps_2) \\
+&amp; \quad \eps' = \{ z \mapsto r \,|\, \eps_1(z) = \eps_2(z) = r \}, \\
+&amp; \quad \{z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{\zdest\} \setminus \dom(\eps')) \cap \dom(\eps)
+\end {align}\]</span></p>
+</section><section id="regalloc-for-conditionals-1" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Conditionals</h2>
+<p><span class="math display">\[\begin {align}
+&amp; \eps' = \{ z \mapsto r \,|\, \eps_1(z) = \eps_2(z) = r \}, \\
+&amp; \{z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{\zdest\} \setminus \dom(\eps')) \cap \dom(\eps)
+\end {align}\]</span></p>
+<ul>
+<li><p>The set of variables <span class="math inline">\(\{z_1, \ldots, z_n\}\)</span> that</p>
+<ul>
+<li><p>are already allocated (<span class="math inline">\({} \cap \dom(\eps)\)</span>),</p></li>
+<li><p>are live (used in the continuation; <span class="math inline">\(\mathit {FV}(\Econt)\)</span>),</p></li>
+<li><p>are not the target (<span class="math inline">\({} \setminus \,\{ \zdest \}\)</span>), and</p></li>
+<li><p>are register-allocted differently along branches <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span>.</p></li>
+</ul></li>
+</ul>
+</section></section>
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="register-allocation-targetting" class="title-slide slide level1" style="top: 210.5px; display: block;"><h1>Register Allocation<br>Targetting</h1></section><section id="targetting-register-recommendation" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Targetting (Register recommendation)</h2>
+<p>Suggest a set of recommended registers for register allocation: <span class="math inline">\(\T_x^E(E, \zdest)\)</span> and <span class="math inline">\(\T_x^e(e, \zdest)\)</span>.</p>
+<p>In selection of <span class="math inline">\(r\)</span> for <span class="math inline">\(x\)</span> in the previous RegAlloc algorithm, the results of <span class="math inline">\(\T_x^E\)</span> and <span class="math inline">\(\T_x^e\)</span> are consulted.</p>
+</section><section id="the-format" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>The Format</h2>
+<p><span class="math display">\[\begin {align}
+\T_x^E:&amp; \text { Id.t} \ra \text {Asm.t} \times \text {Id.t} \ra \text {bool} \times \text {S.t} \\
+&amp; \T_x^E((y \la e; E), \zdest) = (c, s) \\
+\T_x^e:&amp; \text { Id.t} \ra \text {Asm.exp} \times \text {Id.t} \ra \text {bool} \times \text {S.t} \\
+&amp; \T_x^e(e, \zdest) = (c, s)
+\end {align}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(c\)</span>: Does <span class="math inline">\(E\)</span> or <span class="math inline">\(e\)</span> issue function application?</p></li>
+<li><p><span class="math inline">\(s\)</span>: the set of recommended registers for allocation</p></li>
+</ul>
+</section><section id="targetting" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Targetting</h2>
+<p><span class="math display">\[\begin {align}
+\T_x^e(x, \zdest) &amp;=
+  (\mathit {false}, \{ \zdest \}) \\
+\T_x^e(\text {if } y = z \text { then } E_1 \text { else } E_2, \zdest) &amp;=
+  (c_1 \wedge c_2, s_1 \cup s_2) \\
+  &amp; \text {where } \T_x^e(E_1, \zdest) = (c_1, s_1) \\
+  &amp; \text { and } \T_x^e(E_2, \zdest) = (c_2, s_2)
+\end {align}\]</span></p>
+<ol type="1">
+<li><p>As the destination <span class="math inline">\(\zdest\)</span> is specified for <span class="math inline">\(x\)</span>, <span class="math inline">\(\zdest\)</span> is the recommended register for <span class="math inline">\(x\)</span>.</p></li>
+<li><p>Expressions <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> recommend <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>, respectively, for register allocation of <span class="math inline">\(x\)</span>. The register set <span class="math inline">\(s_1 \cup s_2\)</span> is recommended for the whole conditional expression.</p></li>
+</ol>
+</section><section id="targetting-1" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Targetting</h2>
+<p><span class="math display">\[
+\T_x^e(\mathit {apply\_closure}(y_0, y_1, \ldots, y_n), \zdest) =
+(\mathit {true}, \{ \R_i \,|\, x = y_i \})
+\]</span></p>
+<ul>
+<li><p>If <span class="math inline">\(x\)</span> is passed as the <span class="math inline">\(i\)</span>’th argument of the closure, we would like <span class="math inline">\(x\)</span> to be assigned to <span class="math inline">\(\R_i\)</span>.</p></li>
+<li><p>The varialbe <span class="math inline">\(x\)</span> may be placed at more than one parameter positions.</p></li>
+</ul>
+</section></section>
+<section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="register-allocation-spilling" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Register Allocation<br>Spilling</h1></section><section id="issue-idea" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Issue &amp; Idea</h2>
+<p>When we use a large number of registers, we may run out of registers.</p>
+<ul>
+<li><p>A function declaration that takes many formal arguments.</p>
+<p><span class="math inline">\(\mathtt L_x(\r_1, \ldots, \r_n) = \R^E_{x \mapsto \r_0, y_1 \mapsto \r_1, \ldots, y_n \mapsto \r_n} (E, \r_0, \r_0)\)</span> and <span class="math inline">\(n &gt; \text {#registers}\)</span></p>
+<p>Ask the programmer to rewrite the function such that it takes some of the parameters as a tuple.</p></li>
+<li><p>Use of many variables inside a function</p>
+<p>They can not be assigned to registers at the same time</p>
+<p><strong>Spilling</strong>: Push the value of a variable out from a register to stack, while using the register to store other variable’s value</p></li>
+</ul>
+</section><section id="regalloc-for-commands-3" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>RegAlloc for Commands</h2>
+<p>The case: <span class="math inline">\(\R_\eps^E((x \la e, E), \zdest, \Econt)\)</span> (<span class="math inline">\(x\)</span> is not a register) and <span class="math inline">\(\color {red} {^{\not\exists} r \text { such that } r \in \{ \eps'(y) \,|\, y \in \mathit {FV}(\Econtp) \}}\)</span></p>
+<p><span class="math display">\[\begin {align}
+\R_\eps^E&amp;((x \la e, E), \zdest, \Econt) = \\
+&amp; \color {blue} {\begin {cases}
+    ((save(\eps(y), y); \eps'(y) \la E'; E''), \eps'') &amp; y \in \dom(\eps) \\
+    ((\eps'(y) \la E'; E''), \eps'') &amp; \text {otherwise}
+  \end {cases}} \\
+\\
+&amp; \text {where } \Econtp = (\zdest \la E; \Econt) \\
+&amp; \quad \R_\eps^e(e, x, \Econtp) = (E', \eps') \\
+&amp; \quad \color {blue}{y \in \mathit {FV}(\Econtp)} \\
+&amp; \quad \R_{\color {red}{\eps' \setminus \{ y \mapsto \eps'(y) \}, x \mapsto \eps'(y)}}^E(E, \zdest, \Econt) = (E'', \eps'')
+\end {align}\]</span></p>
+<aside class="notes"><ul>
+<li><p>RegAlloc environments: <span class="math inline">\(\eps\)</span>: before the command execution, <span class="math inline">\(\eps'\)</span>: after the execution of <span class="math inline">\(x \la e\)</span>, <span class="math inline">\(\eps''\)</span>: after the execution of <span class="math inline">\((x \la e, E)\)</span>.</p></li>
+<li><p>Command sequence: <span class="math inline">\(E\)</span>: original command sequence, <span class="math inline">\(E'\)</span>: the command sequence for <span class="math inline">\(x \la e\)</span> after its regalloc, <span class="math inline">\(E''\)</span>: the command sequence for <span class="math inline">\(E\)</span> after its regalloc.</p></li>
+<li><p>All the registers are occupied with live variables (<span class="math inline">\(y\)</span> scans over live variables <span class="math inline">\(\mathit {FV}(\Econtp)\)</span>). The variable’s value is pushed out of the allocated register and is saved in the stack ($.</p>
+<ul>
+<li><p><span class="math inline">\(\eps'(y) \la E'\)</span>: Save the result of <span class="math inline">\(x \la e\)</span> in the register which was occupied with <span class="math inline">\(y\)</span> (<span class="math inline">\(\eps'(y)\)</span>).</p></li>
+<li><p>If the register <span class="math inline">\(y\)</span> is going to be used while executing <span class="math inline">\(E\)</span> but is not allocated, yet, we can use the register to store the value of <span class="math inline">\(x\)</span> for the moment.</p></li>
+</ul></li>
+</ul>
+</aside>
+</section><section id="notes" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Notes</h2>
+<ul>
+<li><p>RegAlloc environments: <span class="math inline">\(\eps\)</span>: before the command execution, <span class="math inline">\(\eps'\)</span>: after the execution of <span class="math inline">\(x \la e\)</span>, <span class="math inline">\(\eps''\)</span>: after the execution of <span class="math inline">\((x \la e, E)\)</span>.</p>
+<ul>
+<li><p>Command sequence: <span class="math inline">\(E\)</span>: original command sequence, <span class="math inline">\(E'\)</span>: the command sequence for <span class="math inline">\(x \la e\)</span> after its regalloc, <span class="math inline">\(E''\)</span>: the command sequence for <span class="math inline">\(E\)</span> after its regalloc.</p></li>
+<li><p>All the registers are occupied with live variables (<span class="math inline">\(y\)</span> scans over live variables <span class="math inline">\(\mathit {FV}(\Econtp)\)</span>). The variable’s value is pushed out of the allocated register and is saved in the stack ($.</p>
+<ul>
+<li><p><span class="math inline">\(\eps'(y) \la E'\)</span>: Save the result of <span class="math inline">\(x \la e\)</span> in the register which was occupied with <span class="math inline">\(y\)</span> (<span class="math inline">\(\eps'(y)\)</span>).</p></li>
+<li><p>If the register <span class="math inline">\(y\)</span> is going to be used while executing <span class="math inline">\(E\)</span> but is not allocated, yet, we can use the register to store the value of <span class="math inline">\(x\)</span> for the moment.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section id="reassignment-in-regalloc-for-commands" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Reassignment in RegAlloc for Commands</h2>
+<p><span class="math display">\[\R_{\eps' \setminus \{ y \mapsto \eps'(y) \}, x \mapsto \eps'(y)}^E(E, \zdest, \Econt) = (E'', \eps'')\]</span></p>
+<ul>
+<li><p>Forget about the register assignment to <span class="math inline">\(y\)</span>: <span class="math inline">\({} \setminus \{ y \mapsto \eps'(y) \}\)</span></p></li>
+<li><p>Replace the content of <span class="math inline">\(y\)</span>’s register (<span class="math inline">\(\eps'(y)\)</span>) by <span class="math inline">\(x\)</span>: <span class="math inline">\(x \mapsto \eps'(y)\)</span></p></li>
+</ul>
+</section></section>
+<section id="back-to-top" class="title-slide slide level1 future" style="top: 512px; display: none;" hidden="" aria-hidden="true"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section>
+    </div>
+  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background title-slide slide level1 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
+  Register Allocation
+  Ken Wakita (https://wakita.github.io/fp2018/)
+  Nov 12, 2018
+</div></div>
+
+  <script src="/fp2018/lib/reveal.js/lib/js/head.min.js"></script>
+  <script src="/fp2018/lib/reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+        height: 1024,
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '/fp2018/lib/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/math/math.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    
+
+</body></html>

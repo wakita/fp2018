@@ -1,0 +1,329 @@
+<!DOCTYPE html><html class=" js no-mobile desktop no-ie safari safari538 fp2018-section tmp-section w-400 gt-240 gt-320 lt-480 lt-640 lt-768 lt-800 lt-1024 lt-1280 lt-1440 lt-1680 lt-1920 no-portrait landscape gradient rgba opacity textshadow multiplebgs boxshadow borderimage borderradius cssreflections csstransforms csstransitions touch no-retina no-fontface domloaded" id="11-closure-page"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Ken Wakita (https://wakita.github.io/fp2018/)">
+  <title>Closure Conversion: Implementation</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      .smallcaps{font-variant: small-caps;}
+      .line-block{white-space: pre-line;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="/fp2018/lib/kw.css">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '/fp2018/lib/reveal.js/css/print/pdf.css' : '/fp2018/lib/reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script><link rel="stylesheet" type="text/css" href="/fp2018/lib/reveal.js/css/print/paper.css">
+  <!--[if lt IE 9]>
+  <script src="/fp2018/lib/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]--><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/math/math.js"></script><script type="text/javascript" src="/fp2018/lib/reveal.js/plugin/notes/notes.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML-full"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;">
+  <div class="reveal slide center has-vertical-slides has-horizontal-slides ready" role="application" data-transition-speed="default" data-background-transition="fade">
+    <div class="slides" style="width: 1280px; height: 1024px; left: 50%; top: 50%; bottom: auto; right: auto; -webkit-transform: translate(-50%, -50%) scale(0.28125);">
+
+<section style="top: 48px; display: block;" class="present">
+  <h1 class="title">Closure Conversion: Implementation</h1>
+  <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/">https://wakita.github.io/fp2018/</a>)</p>
+  <p class="date">Nov 5, 2018</p>
+</section>
+
+<section class="slide level2 future" style="top: 492px; display: block;" hidden="" aria-hidden="true">
+
+<!--
+
+# Note
+
+## On treatment of x (1/2)
+
+$$\begin {align}
+{\cal C}_s&(\text {let rec } x\ y_1 \ldots y_n = e_1 \text { in } e_2 = \\
+& {\cal D} \text { += } \mathtt {L}_x(y_1, \ldots, y_n)(z_1, \ldots, z_m) = e_1'; \\
+& \begin {cases}
+\mathit {make\_closure}\ x = (\mathtt {L}_x, ()) \text { in } e_2' \\
+\text {where } e_1' = {\cal C}_{s'}(e_1), e_2' = {\cal C}_{s'}(e_2), \\
+\text {and } s' = s \cup \{ x \}
+& \text {when } \mathit {FV}(e_1') \setminus \{y_1, \ldots, y_n\} = \emptyset \\
+\\
+\mathit {make\_closure}\ x = (\mathtt {L}_x, (z_1, \ldots, z_m)) \text { in } e_2' \\
+\text {where } e_1' = {\cal C}(e_1), e_2' = {\cal C}(e_2),\\
+\text {and } \{z_1, \ldots, z_m\} = \mathit {FV}(e_1') \setminus \{x, y_1, \ldots, y_n\}
+& \text {otherwise}
+\end {cases}
+\end {align}$$
+
+## On treatment of x (2/2)
+
+~~~ {.ocaml}
+(* test/cls-bug2.ml *)
+
+let rec f n =
+  if n < 0 then () else
+  let a = Array.make 1 f in
+  a.(0) (n - 1) in
+f 9
+~~~
+
+-->
+</section>
+<section style="top: 0px; display: block;" hidden="" aria-hidden="true" class="stack future"><section id="implementation-of-closure-conversion" class="title-slide slide level1" style="top: 210.5px; display: block;"><h1>Implementation of Closure Conversion</h1></section><section id="application" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Application</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">(* closure.ml *)</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">let</span> <span class="kw">rec</span> g env known = <span class="kw">function</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  | ...</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  | KNormal.App(x, ys) <span class="kw">when</span> S.mem x known -&gt; AppDir(Id.L(x), ys)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  | KNormal.App(f, xs) -&gt; AppCls(f, xs)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  | ...</a></code></pre></div>
+<p><span class="math display">\[\begin {align}
+{\cal C}_s(x\ y_1\ldots y_n) &amp;=
+\begin {cases}
+\mathit {apply\_closure}(x, y_1, \ldots, y_n) &amp; x \not\in s \\
+\mathit {apply\_direct}(\mathtt {L}_x, y_1, \ldots, y_n) &amp; x \in s
+\end {cases}
+\end {align}\]</span></p>
+</section><section id="the-overview-of-closure-conversion" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>The Overview of Closure Conversion</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb2-1" data-line-number="1">  | KNormal.LetRec({ KNormal.name = (x, t); KNormal.args = yts; KNormal.body = e1 }, e2) -&gt;</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="co">(* Attempt closure conversion, assuming x containing no free variables: Case 1 *)</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="kw">if</span> e1' contains free variable <span class="co">(* our assumption is not met *)</span> <span class="kw">then</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">      <span class="co">(* Retry conversion: Case 2 or 3 *)</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="co">(* Generate toplevel function definition *)</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="co">(* Case 1, 3: Create closure *)</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    e2'</a></code></pre></div>
+<figure>
+<img alt="Even Smarter Closure Conversion" src="/fp2018/mincaml/overview/closure2.png" data-lazy-loaded=""><figcaption>Even Smarter Closure Conversion</figcaption>
+</figure>
+</section><section id="known-and-e1-for-case-1-2" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>known</code> and <code>e1'</code> for Case 1, 2</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">(* Attempt closure conversion, assuming x containing no free variables: Case 1 or 2 *)</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">let</span> toplevel_backup = !toplevel <span class="kw">in</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">let</span> env' = M.add x t env <span class="kw">in</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">let</span> known' = S.add x known <span class="kw">in</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">let</span> e1' = g (M.add_list yts env') known' e1 <span class="kw">in</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw">let</span> zs = S.diff (fv e1') (S.of_list (<span class="dt">List</span>.map <span class="dt">fst</span> yts)) <span class="kw">in</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">let</span> known', e1' =</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  <span class="kw">if</span> S.is_empty zs <span class="kw">then</span> known', e1' <span class="co">(* confirm that variables are closed in e1' *)</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">else</span> Retry conversion because the assertion was <span class="dt">not</span> met <span class="co">(* Case 3 *)</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    ...</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">(* Generate toplevel function definition *)</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">(* Create closure if needed: case 1 or 3 *)</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">e2'</a></code></pre></div>
+<figure>
+<img alt="Case 1" src="/fp2018/mincaml/overview/closure2-impl1.png" data-lazy-loaded=""><figcaption>Case 1</figcaption>
+</figure>
+</section><section id="known-and-e1-for-case-3" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>known</code> and <code>e1'</code> for Case 3</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">let</span> known', e1' =</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">if</span> S.is_empty zs <span class="kw">then</span> known', e1' <span class="co">(* confirm that variables are closed in e1' *)</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">else</span> <span class="co">(* Retry conversion because the assertion was not met *)</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    (toplevel := toplevel_backup; <span class="co">(* reset side effects of conversions for subexpressions *)</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">     <span class="kw">let</span> e1' = g (M.add_list yts env') known e1 <span class="kw">in</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">     known, e1') <span class="kw">in</span></a></code></pre></div>
+<figure>
+<img alt="Toplevel Functions" src="/fp2018/mincaml/overview/closure2-impl2.png" data-lazy-loaded=""><figcaption>Toplevel Functions</figcaption>
+</figure>
+</section><section id="generation-of-toplevel-functions-12" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Generation of Toplevel Functions (1/2)</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb5-1" data-line-number="1">  | KNormal.LetRec({ KNormal.name = (x, t); KNormal.args = yts; KNormal.body = e1 }, e2) -&gt;</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    <span class="co">(* Attempt closure conversion, assuming x containing no free variables: Case 1 *)</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    <span class="kw">if</span> e1' contains free variable <span class="co">(* our assumption is not met *)</span> <span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">      <span class="co">(* Retry conversion: Case 2 or 3 *)</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="co">(* Generate toplevel function definition *)</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="co">(* Case 1, 3: Create closure *)</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    e2'</a></code></pre></div>
+</section><section id="generation-of-toplevel-functions-22" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>Generation of Toplevel Functions (2/2)</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">(* a list of free variables = x, y1, ..., yn *)</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">let</span> zs = S.elements (S.diff (fv e1') (S.add x (S.of_list (<span class="dt">List</span>.map <span class="dt">fst</span> yts)))) <span class="kw">in</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">(* free variables with type annotations *)</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">let</span> zts = <span class="dt">List</span>.map (<span class="kw">fun</span> z -&gt; (z, M.find z env')) zs <span class="kw">in</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">toplevel := { name = (Id.L(x), t); args = yts; formal_fv = zts; body = e1' } :: !toplevel;</a></code></pre></div>
+<figure>
+<img alt="Toplevel Functions" src="/fp2018/mincaml/overview/closure2-impl3.png" data-lazy-loaded=""><figcaption>Toplevel Functions</figcaption>
+</figure>
+</section><section id="makecls-and-e2-12" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>MakeCls</code> and <code>e2'</code> (1/2)</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb7-1" data-line-number="1">  | KNormal.LetRec({ KNormal.name = (x, t); KNormal.args = yts; KNormal.body = e1 }, e2) -&gt;</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="co">(* Attempt closure conversion, assuming x containing no free variables: Case 1 *)</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="kw">if</span> e1' contains free variable <span class="co">(* our assumption is not met *)</span> <span class="kw">then</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">      <span class="co">(* Retry conversion: Case 2 or 3 *)</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="co">(* Generate toplevel function definition *)</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="co">(* Case 1, 3: Create closure *)</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    e2'</a></code></pre></div>
+</section><section id="makecls-and-e2-22" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2><code>MakeCls</code> and <code>e2'</code> (2/2)</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">let</span> e2' = g env' known' e2 <span class="kw">in</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">if</span> S.mem x (fv e2') <span class="kw">then</span> <span class="co">(* does x occur in e2' ? *)</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  MakeCls((x, t), { entry = Id.L(x); actual_fv = zs }, e2')</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">else</span> e2'</a></code></pre></div>
+<figure>
+<img alt="Toplevel Functions" src="/fp2018/mincaml/overview/closure2-impl4.png" data-lazy-loaded=""><figcaption>Toplevel Functions</figcaption>
+</figure>
+<!--
+
+## Issues KW Failed to Answer
+
+1. Aren't $\mathit {FV}(e) = \mathit {FV}(e')$ the same?
+
+1. Does `S.mem x (fv e2')` guarantee $\mathit {FV}(e_1') \setminus \{y_1, \ldots, y_n\} \not= \emptyset$?
+
+-->
+</section></section>
+<section id="back-to-top" class="title-slide slide level1 future" style="top: 512px; display: none;" hidden="" aria-hidden="true"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section>
+    </div>
+  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background title-slide slide level1 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
+  Closure Conversion: Implementation
+  Ken Wakita (https://wakita.github.io/fp2018/)
+  Nov 5, 2018
+</div></div>
+
+  <script src="/fp2018/lib/reveal.js/lib/js/head.min.js"></script>
+  <script src="/fp2018/lib/reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+        height: 1024,
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '/fp2018/lib/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/fp2018/lib/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/math/math.js', async: true },
+          { src: '/fp2018/lib/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    
+
+</body></html>
