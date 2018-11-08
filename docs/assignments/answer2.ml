@@ -7,14 +7,21 @@
 #load "typing.cmo"
 
 let parse s =
+  Id.counter := 0;
   Parser.exp Lexer.token (Lexing.from_string s);;
 
 (* The following is a totally wrong unparser implementation. Please ignore the definition and build an unparser from scratch. *)
 
 let rec unparse (ast : Syntax.t) =
-  "print(let x = 1 in\n" ^
-  "      let y = x in\n" ^
-  "      x + y)";;
+  match ast with
+  | Syntax.Unit -> "()"
+  | Syntax.Int n -> string_of_int n
+  | Syntax.Not e -> "(not " ^ unparse e ^ ")"
+  | Syntax.Eq(e1, e2) -> "(" ^ unparse e1 ^ " = " ^ unparse e2 ^ ")"
+  | Syntax.Var v -> v
+  | Syntax.App(f, args) ->
+      "(" ^ (unparse f) ^ " " ^ String.concat " " (List.map unparse args) ^ ")"
+  | _ -> "fix_me"
 
 let small_test_programs = [
   "()"; "print(true)"; "print(5)"; "print(3.14)";
@@ -41,8 +48,8 @@ let test label s =
   incr test_count;
   flush stdout;
 
-  let ast = parse s in
-  ignore (Typing.f ast);  (* Assert that the program is well typed *)
+  ignore (Typing.f (parse s));  (* Assert that the program is well typed *)
+  let ast = parse s in            (* Parsing done again to refresh type annotations *)
 
   let s = try unparse ast with e ->
     print_endline "Failure during unparsing";
@@ -50,6 +57,7 @@ let test label s =
 
   let pus = try parse s with e ->
     print_endline "Failure during parsing the output of your unparser";
+    print_endline s;
     raise e in
 
   if pus = ast then print_endline "Beautiful!"
