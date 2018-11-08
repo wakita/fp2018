@@ -12,16 +12,16 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css" />
-  <link rel="stylesheet" href="/fp2018/lib/kw.css" />
-  <link rel="stylesheet" href="/fp2018/lib/kw-page.css" />
+  <link rel="stylesheet" href="/fp2018/lib/reveal.js/css/theme/solarized.css">
+  <link rel="stylesheet" href="/fp2018/lib/kw.css">
+  <link rel="stylesheet" href="/fp2018/lib/kw-page.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<header id="title-block-header">
+<header>
 <h1 class="title">FP: Assignment 2 (Oct. 22)</h1>
 <p class="author">Ken Wakita</p>
 </header>
@@ -36,29 +36,34 @@
 <dd>To be placed on OCW-i
 </dd>
 <dt>Method of Submission</dt>
-<dd><p><a href="https://secure.ocw.titech.ac.jp/ocwi/">OCW-i</a></p>
-<p>Name your answer file <code>answer2.ml</code> and upload it at the respective page of OCW-i.</p>
+<dd>Upload <code>answer2.ml</code> at the respective page of <a href="https://secure.ocw.titech.ac.jp/ocwi/">OCW-i</a>.
 </dd>
 <dt>Delayed Submission</dt>
 <dd>Each submission is weighed according to half-value period of 10 days. That means if you submit a perfect answer 30 days after the due date, you will receive <span class="math inline">\(1/8\)</span> the full points. In other words, you lose <span class="math inline">\(1 - 1/2^{1/10} \approx 6.7\text {%}\)</span> points each day after the due date has passed. It is very wise to keep the due date.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
 </dd>
 </dl>
-<!--
-# Your Mission
-
-Download the template OCaml file  [answer2.ml](/fp2018/answer2.ml) for this assignment.
-
-Your mission is to correctly modify `answer2.ml`.
--->
 <h2 id="problem">Problem</h2>
 <p>Complete the definition of <code>unparse</code> that takes an AST (abstract syntax tree as defined in <code>syntax.ml</code>) of the Min Caml compiler and generates its source program.</p>
 <ul>
 <li><p>The AST is <code>ast</code>(<span class="math inline">\(P\)</span>)</p></li>
-<li><p>Correctness of unparsing is stated in the following manner:</p>
+<li><p>Correctness of unparsing:</p>
 <p>For any Min Caml program <span class="math inline">\(P\)</span>: <code>ast</code>(<span class="math inline">\(P\)</span>) = <code>ast</code>(<code>unparse</code>(<code>ast</code>(<span class="math inline">\(P\)</span>)))</p>
 <p>In other words, for an AST <span class="math inline">\(t\)</span> = <code>ast</code>(<span class="math inline">\(P\)</span>), <code>ast</code>(<code>unparse</code>(<span class="math inline">\(t\)</span>)) = <span class="math inline">\(t\)</span>.</p></li>
-<li><p>It is desirable for <code>unparse</code> to generate properly indented programs that look nice to human eyes.</p></li>
+<li><p>It is desirable for <code>unparse</code> to generate properly indented programs that look nice to human eyes. An answer that gives a beautifully indented out will get extra bonus points. The amount of bonus is written in the top page.</p></li>
 </ul>
+<dl>
+<dt>Obtaining the template file</dt>
+<dd>Download a template <a href="https://github.com/wakita/fp2018/blob/master/answer2.ml"><code>answer2.ml</code></a> and save it where you built <code>min-caml.top</code>. The template contains 25 test cases.
+</dd>
+<dt>Examining the AST</dt>
+<dd>Run <code>min-caml.top</code> and type in <code>ast &lt;a min-caml expression&gt;</code>, where <code>&lt;a min-caml expression&gt;</code> is the expression that you want to examine.
+</dd>
+<dt>Testing your unparser</dt>
+<dd><p>If you are (half-) finished with the assignment, run the code with <code>ocaml answer2.ml</code></p>
+<p><code>answer2.ml</code> must stay at the directory where you built <code>min-caml.top</code> and you must run the <code>ocaml answer2.ml</code> command at this directory.</p>
+<p>Use <code>ocaml</code>. Not <code>min-caml.top</code>. <code>answer2.ml</code> is written in OCaml.</p>
+</dd>
+</dl>
 <hr />
 <p><strong>Back to <a href="/fp2018/page/">Top</a></strong></p>
 <section class="footnotes">
