@@ -73,7 +73,7 @@
 
 <section style="top: 229px; display: block;" class="present">
   <h1 class="title">Register Allocation</h1>
-  <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/">https://wakita.github.io/fp2018/</a>)</p>
+  <p class="author">Ken Wakita (<a href="https://wakita.github.io/fp2018/" class="uri">https://wakita.github.io/fp2018/</a>)</p>
   <p class="date">Nov 12, 2018</p>
 </section>
 
@@ -97,11 +97,11 @@
         \text {Asm.t} \times \text {Id.t} \times \text {Asm.t} \rightarrow \\
 &amp;       \text {Asm.t} \times \text {Id.t M.t} \\
 &amp; \R^E_\varepsilon(E, \zdest, E_{\text {cont}}) = (e', \varepsilon') \\
-\R^e :&amp; \text {Id.t M.t} \rightarrow
+\R^e, \R^e :&amp; \text {Id.t M.t} \rightarrow
         \text {Asm.exp} \times \text {Id.t} \times \text {Asm.t} \rightarrow \\
-&amp;       \text {Asm.t} \times \text {Id.t M.t} \\
-&amp; \R^e_\varepsilon(e, \zdest, E_{\text {cont}}) = (e', \varepsilon')
+&amp;       \text {Asm.t} \times \text {Id.t M.t}
 \end {align}\]</span></p>
+<p><span class="math inline">\(\varepsilon:\)</span> variable to register mapping / <span class="math inline">\(z_{\text {dest}}:\)</span> the register where the result of an expression should be saved.</p>
 </section><section id="regalloc-for-a-program" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>RegAlloc for a Program</h2>
 <p><span class="math display">\[\begin {align}
@@ -122,7 +122,7 @@
 <ul>
 <li>Closure is given by <span class="math inline">\(\r_0\)</span></li>
 <li>Actual arguments are passed via <span class="math inline">\(\r_1, \ldots, \r_n\)</span></li>
-<li>The result of computation by the function should be passed by <span class="math inline">\(\r_0\)</span> (the second argument <span class="math inline">\(\r_0\)</span> of <span class="math inline">\(\R^E\)</span>)</li>
+<li>The result of computation by the function should be stored in <span class="math inline">\(\r_0\)</span> (the second argument <span class="math inline">\(\r_0\)</span> of <span class="math inline">\(\R^E\)</span>)</li>
 <li>The value of function definition is the function itself (the last argument <span class="math inline">\(\r_0\)</span> of <span class="math inline">\(\R^E\)</span>)</li>
 </ul></li>
 </ul>
@@ -153,7 +153,7 @@
 \end {align}\]</span></p>
 <ol type="1">
 <li><p>Try to allocate register: <span class="math inline">\(\zdest \la (r \la e; E); \Econt\)</span></p></li>
-<li><p>Register allocte <span class="math inline">\(e\)</span>, specifying <span class="math inline">\(r\)</span> as its destination and <span class="math inline">\(\Econtp = (\zdest \la E; \Econt)\)</span> as its continuation.</p></li>
+<li><p>Register allocate <span class="math inline">\(e\)</span>, specifying <span class="math inline">\(r\)</span> as its destination and <span class="math inline">\(\Econtp = (\zdest \la E; \Econt)\)</span> as its continuation.</p></li>
 <li><p>Register allocate <span class="math inline">\(E\)</span>, specifying <span class="math inline">\(\zdest\)</span> as its destination and <span class="math inline">\(\Econt\)</span> as its continuation.</p></li>
 <li><p>Combine the results</p></li>
 </ol>
@@ -200,6 +200,9 @@
 &amp; \mathtt {apply\_closure}(\eps(x), \eps(y_1), \ldots, \eps(y_n))), \emptyset) \\ \\
 &amp; \text {where } \{ z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{ \zdest \}) \cap \dom(\eps)
 \end {align}\]</span></p>
+<ul>
+<li>Save live registers (<span class="math inline">\(\varepsilon(z)\)</span>) in the stack locations (<span class="math inline">\(z\)</span>). More detail is found in the next slide.</li>
+</ul>
 </section><section id="regalloc-for-closure-calls-1" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>RegAlloc for Closure Calls</h2>
 <p><span class="math display">\[\text {where } \{ z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{ \zdest \}) \cap \dom(\eps)\]</span></p>
@@ -219,9 +222,9 @@
 &amp; \ldots \\
 &amp; \mathtt {save}(\eps(z_n), z_n); \\
 &amp; \text {if } \eps(x) = \eps(y) \text { then } E_1' \text { else } E_2'), \eps') \\
-\\
-&amp; \text {where } \R_\eps^E(E_1, \zdest, \Econt) = (E_1', \eps_1) \\
-&amp; \quad \R_\eps^E(E_2, \zdest, \Econt) = (E_2', \eps_2) \\
+%
+&amp; \text {where } \R_\eps^E(E_1, \zdest, \Econt) = (E_1', \eps_1) \text { and }
+  \R_\eps^E(E_2, \zdest, \Econt) = (E_2', \eps_2) \\
 &amp; \quad \eps' = \{ z \mapsto r \,|\, \eps_1(z) = \eps_2(z) = r \}, \\
 &amp; \quad \{z_1, \ldots, z_n \} = (\mathit {FV}(\Econt) \setminus \{\zdest\} \setminus \dom(\eps')) \cap \dom(\eps)
 \end {align}\]</span></p>
@@ -237,7 +240,7 @@
 <li><p>are already allocated (<span class="math inline">\({} \cap \dom(\eps)\)</span>),</p></li>
 <li><p>are live (used in the continuation; <span class="math inline">\(\mathit {FV}(\Econt)\)</span>),</p></li>
 <li><p>are not the target (<span class="math inline">\({} \setminus \,\{ \zdest \}\)</span>), and</p></li>
-<li><p>are register-allocted differently along branches <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span>.</p></li>
+<li><p>are register-allocted differently along branches <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2 (\setminus \dom(\eps'))\)</span>.</p></li>
 </ul></li>
 </ul>
 </section></section>
@@ -245,8 +248,8 @@
 <h2>Targetting (Register recommendation)</h2>
 <p>Suggest a set of recommended registers for register allocation: <span class="math inline">\(\T_x^E(E, \zdest)\)</span> and <span class="math inline">\(\T_x^e(e, \zdest)\)</span>.</p>
 <p>In selection of <span class="math inline">\(r\)</span> for <span class="math inline">\(x\)</span> in the previous RegAlloc algorithm, the results of <span class="math inline">\(\T_x^E\)</span> and <span class="math inline">\(\T_x^e\)</span> are consulted.</p>
-</section><section id="the-format" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
-<h2>The Format</h2>
+</section><section id="the-register-targetting-format" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
+<h2>The Register Targetting Format</h2>
 <p><span class="math display">\[\begin {align}
 \T_x^E:&amp; \text { Id.t} \ra \text {Asm.t} \times \text {Id.t} \ra \text {bool} \times \text {S.t} \\
 &amp; \T_x^E((y \la e; E), \zdest) = (c, s) \\
@@ -284,18 +287,18 @@
 </section></section>
 <section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="register-allocation-spilling" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Register Allocation<br>Spilling</h1></section><section id="issue-idea" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>Issue &amp; Idea</h2>
-<p>When we use a large number of registers, we may run out of registers.</p>
+<p>When a program contains a large number of variables, we may run out of hardware registers.</p>
 <ul>
-<li><p>A function declaration that takes many formal arguments.</p>
+<li><p>Example 1: A function declaration that has many formal arguments.</p>
 <p><span class="math inline">\(\mathtt L_x(\r_1, \ldots, \r_n) = \R^E_{x \mapsto \r_0, y_1 \mapsto \r_1, \ldots, y_n \mapsto \r_n} (E, \r_0, \r_0)\)</span> and <span class="math inline">\(n &gt; \text {#registers}\)</span></p>
-<p>Ask the programmer to rewrite the function such that it takes some of the parameters as a tuple.</p></li>
-<li><p>Use of many variables inside a function</p>
+<p>The <code>min-caml</code> language <em>specification</em> asks the programmer to rewrite the function such that it takes some of the parameters as a tuple.</p></li>
+<li><p>Example 2: Use of many variables inside a function</p>
 <p>They can not be assigned to registers at the same time</p>
 <p><strong>Spilling</strong>: Push the value of a variable out from a register to stack, while using the register to store other variable’s value</p></li>
 </ul>
 </section><section id="regalloc-for-commands-3" class="slide level2 future" aria-hidden="true" style="top: 512px; display: none;">
 <h2>RegAlloc for Commands</h2>
-<p>The case: <span class="math inline">\(\R_\eps^E((x \la e, E), \zdest, \Econt)\)</span> (<span class="math inline">\(x\)</span> is not a register) and <span class="math inline">\(\color {red} {^{\not\exists} r \text { such that } r \in \{ \eps'(y) \,|\, y \in \mathit {FV}(\Econtp) \}}\)</span></p>
+<p>The case: <span class="math inline">\(\R_\eps^E((x \la e, E), \zdest, \Econt)\)</span> (<span class="math inline">\(x\)</span> is not a register) and <span class="math inline">\(\color {red} {^\forall r. ^\exists y. \{ r = \eps'(y) \,|\, y \in \mathit {FV}(\Econtp) \}}\)</span></p>
 <p><span class="math display">\[\begin {align}
 \R_\eps^E&amp;((x \la e, E), \zdest, \Econt) = \\
 &amp; \color {blue} {\begin {cases}
@@ -339,9 +342,9 @@
 <li><p>Replace the content of <span class="math inline">\(y\)</span>’s register (<span class="math inline">\(\eps'(y)\)</span>) by <span class="math inline">\(x\)</span>: <span class="math inline">\(x \mapsto \eps'(y)\)</span></p></li>
 </ul>
 </section></section>
-<section id="back-to-top" class="title-slide slide level1 future" style="top: 512px; display: none;" hidden="" aria-hidden="true"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section>
+<section style="top: 512px; display: none;" hidden="" aria-hidden="true" class="stack future"><section id="back-to-top" class="title-slide slide level1" style="top: 512px; display: none;"><h1>Back to <a href="/fp2018/page/">Top</a></h1></section></section>
     </div>
-  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background title-slide slide level1 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
+  <div class="backgrounds"><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background slide level2 future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background title-slide slide level1 present" style="display: none;"><div class="slide-background-content"></div></div></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-right enabled highlight" aria-label="next slide"><div class="controls-arrow"></div></button><button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button><button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="slide-number" style="display: block;"><a href="#/"><span class="slide-number-a">1</span></a></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
   Register Allocation
   Ken Wakita (https://wakita.github.io/fp2018/)
   Nov 12, 2018
